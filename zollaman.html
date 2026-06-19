@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,400;1,500;1,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/galmuri@latest/dist/galmuri.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>졸라맨's Profile | human-based</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Galmuri9', sans-serif;
+            background-color: #efefef;
+            font-size: 12px;
+            color: #333;
+        }
+
+        a { color: #6699cc; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        body {
+            background-image: url("배경.jpg");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        .topbar {
+            background: linear-gradient(to bottom, #ddeeff, #10c6b3);
+            border-bottom: 2px solid #6699cc;
+            padding: 8px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        .topbar .logo { font-size: 20px; font-weight: bold; color: #336699; font-family: "Galmuri9", serif;
+            top: 1.5rem; left: 2rem;
+            z-index: 100;
+            padding: 4px 15px;
+            font-size: 25px;
+            font-weight: 600;
+            text-decoration: none;
+            line-height: 1.2;
+            letter-spacing: -1px; }
+        .topbar .back-btn {
+            font-size: 11px; background: #6699cc; color: white; border: none;
+            padding: 4px 12px; cursor: pointer; text-decoration: none;
+            display: inline-block; border-radius: 4px;
+        }
+        .topbar .back-btn:hover { background: #4477aa; text-decoration: none; }
+
+        /* 전체 3단 레이아웃 */
+        .container {
+            max-width: 1100px;
+            width: 100%;
+            margin: 14px auto;
+            background: white;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 16px;
+            display: flex;
+            gap: 14px;
+        }
+
+        /* 왼쪽 프로필 */
+        .left-col { width: 220px; flex-shrink: 0; }
+
+        /* 오른쪽 2단 */
+        .right-wrap { flex: 1; min-width: 0; display: flex; gap: 14px; }
+        .mid-col { flex: 1; min-width: 0; }
+        .far-col { width: 220px; flex-shrink: 0; }
+
+
+        /* Profile */
+        .profile-name { font-size: 25px; font-weight: bold; color: #336699; margin-bottom: 8px; font-family: Georgia, serif; }
+
+        .profile-pic {
+            border: 2px solid #6699cc; border-radius: 3px;
+            background: #f0f8ff; display: flex;
+            justify-content: center; align-items: center;
+            aspect-ratio: 1 / 1;
+            width: 100%;
+            margin-bottom: 8px;
+            animation: sway 8s ease-in-out infinite;
+            transform-origin: top center;
+            overflow: hidden;
+        }
+        .profile-pic img {
+            width: 100%; height: 100%; object-fit: cover;
+        }
+
+        .stick-figure { animation: float 3s ease-in-out infinite; }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .status-quote {
+            font-style: italic; font-size: 11px; color: #555;
+            background: #f0f8ff; border-left: 3px solid #6699cc;
+            border-radius: 0 2px 2px 0; padding: 6px 9px; margin-bottom: 8px;
+        }
+
+        .online-dot { width: 8px; height: 8px; background: #44cc44; border-radius: 50%; display: inline-block; margin-right: 4px; }
+        .meta-line { font-size: 10px; color: #555; margin-bottom: 3px; }
+
+        /* Boxes */
+        .box { border: 1px solid #10c6b3; margin-bottom: 12px; border-radius: 3px; overflow: hidden;
+             animation: sway 6s ease-in-out infinite;
+             transform-origin: top center;
+             }
+        .box:nth-child(2n) { animation-duration: 7s; animation-delay: -1.5s; }
+        .box:nth-child(3n) { animation-duration: 5.5s; animation-delay: -3s; }
+        .box:nth-child(4n) { animation-duration: 6.5s; animation-delay: -2s; }
+        .box:nth-child(5n) { animation-duration: 7.5s; animation-delay: -4s; }
+
+        @keyframes sway {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-3px); }
+        }
+        .box-header { background: #10c6b3; color: white; padding: 6px 9px; font-weight: bold; font-size: 11px; }
+        .box-header a { color: #e0fff9; font-weight: normal; font-size: 10px; }
+        .box-content { padding: 8px; background: white; }
+
+        .contact-links { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
+        .contact-links a { font-size: 10px; color: #336699; display: flex; align-items: center; gap: 4px; padding: 2px 0; }
+
+        .url-box { font-size: 9px; border: 1px solid #ccc; border-radius: 3px; padding: 4px; background: #f9f9f9; word-break: break-all; color: #555; }
+
+        /* Profile table */
+        .zollamanprofile { width: 100%; border-collapse: collapse; font-size: 10px; }
+        .zollamanprofile td { padding: 4px 6px; border: 1px solid #ddd; vertical-align: top; }
+        .zollamanprofile td.label { background: #d1f9ec; font-weight: bold; width: 75px; color: #224466; }
+
+        /* Blurbs */
+        .blurb-title { color: #ff6600; font-weight: bold; margin: 8px 0 4px; font-size: 12px; }
+        .blurb-text { font-size: 11px; line-height: 1.6; }
+
+        /* Blog */
+        .blog-list { list-style: none; }
+        .blog-list li { border-bottom: 1px dotted #ccc; padding: 5px 0; font-size: 10px; }
+
+        .moreinformation { list-style: none; }
+        .moreinformation li { border-bottom: 1px dotted #ccc; padding: 4px 8px; font-size: 10px; }
+
+
+        /* YouTube */
+        .yt-wrap { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 4px; }
+        .yt-wrap iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+
+        /* Friends */
+        .friends-grid { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 6px; }
+        .friend-item { text-align: center; width: 58px; }
+        .friend-avatar {
+            width: 50px; height: 50px; background: #d1f9ec;
+            border: 1px solid #4477aa; border-radius: 4px;
+            margin: 0 auto 3px; display: flex;
+            align-items: center; justify-content: center; font-size: 22px;
+            overflow: hidden;
+        }
+        .friend-avatar img {
+            width: 100%; height: 100%; object-fit: cover;
+        }
+        .friend-item a { font-size: 9px; }
+
+        /* Comments */
+        .comments-table { width: 100%; border-collapse: collapse; font-size: 10px; }
+        .comments-table td { padding: 6px; border: 1px solid #ddd; vertical-align: top; }
+        .comment-avatar {
+            width: 40px; height: 40px; background: #d1f9ec;
+            border: 1px solid #6699cc; border-radius: 4px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 18px; margin: 0 auto 3px;
+            overflow: hidden;
+        }
+        .comment-avatar img {
+            width: 100%; height: 100%; object-fit: cover;
+        }   
+        .comment-username { font-weight: bold; color: #336699; font-size: 10px; display: block; text-align: center; }
+        .comment-date { font-size: 9px; color: #888; display: block; margin-bottom: 3px; }
+        .comment-text { line-height: 1.5; }
+        .comment-reply { font-size: 9px; color: #336699; font-style: italic; margin-top: 4px; }
+
+        /* Footer */
+        .footer { text-align: center; font-size: 10px; color: #888; margin: 6px 0 14px; padding-top: 6px; border-top: 1px solid #ccc; }
+        .footer a { color: #6699cc; margin: 0 4px; }
+
+        /* RESPONSIVE */
+        @media (max-width: 900px) {
+            .right-wrap { flex-direction: column; }
+            .far-col { width: 100%; }
+        }
+        @media (max-width: 600px) {
+            .container { flex-direction: column; margin: 8px; padding: 12px; }
+            .left-col { width: 100%; min-width: 0; }
+            .right-wrap { flex-direction: column; }
+            .far-col { width: 100%; order: 99; }
+            .contact-links { grid-template-columns: 1fr 1fr; }
+            .blurb-text { font-size: 10px; }
+        @media (max-width: 400px) {
+            .profile-name { font-size: 18px; }
+            .contact-links { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="topbar">
+    <div class="logo">2000년대 캐릭터</div>
+    <a href="index.html#open=panel" class="back-btn">← 돌아가기</a>
+</div>
+
+<div class="container">
+
+    <!-- 왼쪽: 프로필 -->
+    <div class="left-col">
+        <div class="profile-name">졸라맨</div>
+
+        <div class="profile-pic">
+            <img src="졸라맨.png" alt="졸라맨">
+        </div>
+
+        <div class="status-quote">사랑과 정의를 지키는 이 졸라맨님이 너희들을 처단하리라!</div>
+        <div class="meta-line"><span class="online-dot"></span>Last active: 방금 전</div>
+        <div class="meta-line"><b>Mood:</b> 정의감 넘침</div>
+
+        <div class="box">
+            <div class="box-header">최근 게시물</div>
+            <div class="box-content">
+                <ul class="blog-list">
+                    <li>녀석들은 어디로 잡혀간 걸까?</li>
+                    <li>음냐... 음냐... 나는야 사랑과 정의를 지키는... 중얼중얼~</li>
+                    <li>딩가딩가 아이 조아~ (<a href="#">more</a>)</li>
+                    <li>잠깐... 줄.. 줄서서 덤벼</li>
+                    <li>졸라걸, 변신 예쁘게 됐어? </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="box">
+            <div class="box-header">More Information...</div>
+            <div class="box-content">
+                <ul class="moreinformation">
+                    <li>커니엔터테인먼트의 대표 캐릭터인 졸라맨이 등장하는 플래시 애니메이션은 지난 2001년 폭발적인 인기를 누렸다. 그 여세를 몰아 시작한 모바일 서비스, 광고, 만화책, 캐릭터 상품은 나날이 시장을 넓혀가고 있다.<br>졸라맨이 두터운 마니아 층을 형성할 수 있었던 비결은 한마디로 독특한 성격 때문이다. 졸라맨의 읾은 '매우'나 '아주를 의미하는 은어이며, '조르다'의 변형인 '졸라'에서 따온 말이기도 하다. 재미와 감동을 전하는 '코믹 동네 어드벤처'가 지향하는 장르이며, 현재는 텔레비전용 애니메이션이 기획중이다. </li>
+                </ul>
+            </div>
+        </div>
+    </div><!-- left-col 끝 -->
+
+    <!-- 오른쪽 2단 -->
+    <div class="right-wrap">
+
+        <!-- 가운데 -->
+        <div class="mid-col">
+
+            <div class="box">
+                <div class="box-header">프로필</div>
+                <div class="box-content">
+                    <table class="zollamanprofile">
+                        <tr><td class="label">이름</td><td>졸라맨 Zollaman</td></tr>
+                        <tr><td class="label">유형</td><td>인간형</td></tr>
+                        <tr><td class="label">성격</td><td>정의감 넘치지만 어설픔, 열정 100% 실력은... 50%</td></tr>
+                        <tr><td class="label">인적사항</td><td>2000년 3월 흰 땅에서 탄생한 대한민국 국적의 남자</td></tr>
+                        <tr><td class="label">키, 체중</td><td>키는 플레시 창 크기에 따라 달라지며, 체중은 알 수 없음</td></tr>
+                        <tr><td class="label">직업</td><td>정의의 파수꾼, 쉬운 말로 백수</td></tr>
+                        <tr><td class="label">좋아하는 것</td><td>공짜, 10원짜리, 떙그랑 저축송</td></tr>
+                        <tr><td class="label">아끼는 보물</td><td>졸라맨 파워 변신 세트. 위급한 상황에서 수퍼 액션 메가 히어로 졸라맨으로 예쁘게(?) 변신시켜 준다.</td></tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="box">
+                <div class="box-header">내 정보</div>
+                <div class="box-content">
+                    <div class="blurb-title">About me:</div>
+                    <p class="blurb-text">소심하며 어리숙하지만 바른 사나이를 지향한다. 인생의 목표는 진정한 사랑과 정의 수호. 영웅심에 사로잡혀 있는 어설픈 영웅이지만, 일단 변신하면 파워수트의 도움으로 상황이 달라진다. 특히 쌍절봉 돌리는 솜씨는 일품이다. 언제나 중얼거리고, 오두방정을 떤다.</p>
+                    <div class="blurb-title">&lt;뒷골목에서 위험에 처할 때의 단계별 지침&gt;</div>
+                    <p class="blurb-text">1. 일단 졸라맨을 외친다<br>2. 뒤는 졸라맨에게 맡기고 앞만 보고 달려서 위험 지역을 벗어난다.<br>3. 시간 나면 졸라맨의 명복을 빌어준다</p>
+                </div>
+            </div>
+
+            <div class="box">
+                <div class="box-header">방명록</div>
+                <div class="box-content">
+                    <table class="comments-table">
+                        <tr>
+                            <td style="width:55px;text-align:center;">
+                                <div class="comment-avatar"><img src="졸라걸.webp" alt="졸라걸"></div></div>
+                                <a class="comment-username" href="#">졸라걸</a>
+                            </td>
+                            <td>
+                                <span class="comment-date">2002-06-01</span>
+                                <p class="comment-text">졸라맨!!! 얼른 일어나! 이상한 놈들이 쳐들어와서 지금 화이트랜드가 난장판이란 말야!</p>
+                                <p class="comment-reply">→ 졸라맨의 여자친구, 노란색 헬멧을 착용하고 있다.</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width:55px;text-align:center;">
+                                <div class="comment-avatar"><img src="졸릴레오박사.webp" alt="졸릴레오박사"></div></div>
+                                <a class="comment-username" href="#">졸릴레오 박사</a>
+                            </td>
+                            <td>
+                                <span class="comment-date">2001-05-28</span>
+                                <p class="comment-text"></p>
+                                <p class="comment-reply">→ 화이트랜드와 마적단을 대표하는 천재 박사들. 이블맨의 협박에 못이겨 결국 핵무기를 개발하기로 하는데...</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width:55px;text-align:center;">
+                                <div class="comment-avatar"><img src="꾸자.png" alt="꾸자"></div></div>
+                                <a class="comment-username" href="#">꾸자</a>
+                            </td>
+                            <td>
+                                <span class="comment-date">2001-05-15</span>
+                                <p class="comment-text">악! 꾸자 살려</p>
+                                <p class="comment-reply">→ </p>
+                            </td>
+                        </tr>
+                        
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- 오른쪽 -->
+        <div class="far-col">
+
+            <div class="box">
+                <div class="box-header">📺 졸라맨 영상 보기</div>
+                <div class="box-content">
+                    <div class="yt-wrap">
+                        <iframe
+                            src="https://www.youtube.com/embed/3beY2pEPBDw"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+
+            <div class="box">
+                <div class="box-header">졸라맨's Friend Space</div>
+                <div class="box-content">
+                    <p style="font-size:10px;margin-bottom:6px;">졸라맨 has <b>2000</b> friends.</p>
+                    <div class="friends-grid">
+                        <div class="friend-item"><div class="friend-avatar"><img src="졸라걸.webp" alt="졸라걸"></div><a href="#">졸라걸</a></div>
+                        <div class="friend-item"><div class="friend-avatar"><img src="졸릴레오박사.webp" alt="졸릴레오박사"></div><a href="#">졸릴레오 박사</a></div>
+                        <div class="friend-item"><div class="friend-avatar"><img src="졸라2호.webp" alt="졸라2호"></div><a href="#">졸라 2호</a></div>
+                        <div class="friend-item"><div class="friend-avatar"><img src="졸라삼총사.webp" alt="졸라삼총사"></div><a href="#">졸라 삼총사</a></div>
+                        <div class="friend-item"><div class="friend-avatar"><img src="졸라삿갓.webp" alt="삿갓맨"></div><a href="#">삿갓맨</a></div>
+                        <div class="friend-item"><div class="friend-avatar"><img src="졸라똘똘이.png" alt="졸라똘똘이"></div><a href="#">졸라 똘똘이</a></div>
+                        <div class="friend-item"><div class="friend-avatar"><img src="쿵후맨.png" alt="쿵후맨"></div><a href="#">쿵후맨</a></div>
+                        <div class="friend-item"><div class="friend-avatar"><img src="두건맨.png" alt="두건맨"></div><a href="#">두건맨</a></div>
+                        <div class="friend-item"><div class="friend-avatar"><img src="건달프.png" alt="건달프"></div><a href="#">건달프</a></div>
+                        <div class="friend-item"><div class="friend-avatar"><img src="꾸자.png" alt="꾸자"></div><a href="#">꾸자</a></div>
+                        <div class="friend-item"><div class="friend-avatar"><img src="선글라스맨.png" alt="선글라스맨"></div><a href="#">선글라스맨</a></div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="footer">
+    ©2026 2000s characters
+</div>
+
+</body>
+</html>

@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2000s CHARACTERS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Playfair+Display:wght@700;900&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,400;1,500;1,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/galmuri@latest/dist/galmuri.css">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            background: #f1f3f2;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+
+        /* ===== 데스크탑: 십자선 4분할 ===== */
+        .desktop-grid {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+        }
+
+        /* 가로선 */
+        .desktop-grid::before {
+            content: '';
+            position: absolute;
+            top: 50%; left: 0;
+            width: 100%; height: 3px;
+            background: #76ff8b;
+            transform: translateY(-50%);
+            z-index: 5;
+        }
+        /* 세로선 */
+        .desktop-grid::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 50%;
+            width: 3px; height: 100%;
+            background: #76ff8b;
+            transform: translateX(-50%);
+            z-index: 5;
+        }
+
+        .cell {
+            position: relative;
+            display: flex;
+            align-items: flex-end;
+            padding: 2rem 2.5rem;
+            cursor: pointer;
+            transition: background 0.25s ease;
+            text-decoration: none;
+            color: #111;
+            overflow: hidden;
+            background: #f1f3f2;
+        }
+        .cell:hover { text-decoration: none; }
+        .cell-human:hover  { background: #3cb6e9; }
+        .cell-animal:hover { background: #ee5dd8; }
+        .cell-object:hover { background: #e0e441; }
+        .cell-empty { cursor: default; }
+
+        .cell-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.2rem, 2.5vw, 2rem);
+            color: #111;
+            position: relative;
+            z-index: 2;
+        }
+
+        .cell-img { display: none; }
+
+        /* 로고 */
+        .logo {
+            position: fixed;
+            top: 1.5rem; left: 2rem;
+            z-index: 100;
+            font-family: "Pyeonsan", "KoPub Batang", "Noto Serif KR", serif;
+            font-size: clamp(32px, 5vw, 80px);
+            font-weight: 800;
+            color: #111;
+            text-decoration: none;
+            line-height: 1.2;
+        }
+        .logo:hover { text-decoration: none; }
+
+        /* ===== 모바일 ===== */
+        .mobile-wrap {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            flex-direction: column;
+        }
+
+        /* 위쪽 절반: 캐릭터들 */
+        .mobile-top {
+            position: relative;
+            flex: 1;
+            z-index: 10;
+        }
+
+        .mobile-logo {
+            position: absolute;
+            top: 1.4rem; left: 1.8rem;
+            font-family: "Cormorant Garamond", serif;
+            font-size: clamp(38px, 7vw, 80px);
+            font-weight: 800;
+            color: #111;
+            line-height: 1.2;
+            z-index: 10;
+        }
+
+        /* 캐릭터사진모바일 */
+        .mob-img {
+            position: absolute;
+            pointer-events: none;
+        }
+        .mob-img-1 { width: 60px; top: 82%; left: 8%; }
+        .mob-img-2 { width: 80px; top: 10%; right: 28%; }
+        .mob-img-3 { width: 80px; top: 45%; left: 8%; }
+
+        /* 가로선 */
+        .mobile-divider {
+            width: 100%;
+            height: 3px;
+            background: #76ff8b;
+            flex-shrink: 0;
+        }
+
+        /*아래쪽칸모바일*/
+        .mobile-bottom {
+            flex: 1;
+            position: relative;
+            background: #f1f3f2;
+            overflow: hidden;
+        }
+
+        .carousel {
+            display: flex;
+            width: 300%;
+            height: 100%;
+            transition: transform 0.3s ease;
+        }
+
+        .carousel-slide {
+            width: 33.3333%;
+            height: 100%;
+            display: flex;
+            position: relative;
+            align-items: flex-start;
+            justify-content: flex-start;
+            padding: 2rem;
+            text-decoration: none;
+            color: #111;
+            transition: background 0.25s ease;
+            flex-shrink: 0;
+        }
+        .carousel-slide:hover { text-decoration: none; }
+        .slide-human:hover  { background: #3cb6e9; }
+        .slide-animal:hover { background: #ee5dd8; }
+        .slide-object:hover { background: #e0e441; }
+
+        .slide-title {
+            font-family: "Pyeonsan", "KoPub Batang", "Noto Serif KR", serif;
+            letter-spacing: -0.03em;
+            line-height: 1;
+            font-weight: 400;
+            font-size: 2rem;
+            color: #111;
+            position: absolute;
+            top: 13%;
+            right: 13%;
+        }
+
+        /*화살표버튼*/
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 1.3rem; height: 1.3rem;
+            border-radius: 50%;
+            background: #111;
+            border: none;
+            cursor: pointer;
+            transition: background 0.2s ease;
+            z-index: 10;
+        }
+        .carousel-btn:hover { background: #fb2626; }
+        .carousel-prev { left: 0.75rem; }
+        .carousel-next { right: 0.75rem; }
+
+        /* ===== 반응형 전환 ===== */
+        @media (min-width: 768px) {
+            .desktop-grid { display: grid; }
+            .logo { display: block; }
+            .mobile-wrap { display: none !important; }
+        }
+
+        @media (max-width: 767px) {
+            .desktop-grid { display: none; }
+            .logo { display: none; }
+            .mobile-wrap { display: flex; }
+        }
+
+        /* 햄버거 버튼 */
+        .hamburger-btn {
+            position: fixed;
+            top: 1.5rem; right: 2rem;
+            z-index: 200;
+            width: 50px; height: 50px;
+            background: #0a0996;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            transition: background 0.25s ease;
+        }
+        .hamburger-btn:hover { background: #76ff8b; }
+        .hamburger-btn span {
+            width: 22px; height: 2px;
+            background: #fff;
+            transition: background 0.25s ease;
+        }
+        .hamburger-btn:hover span { background: #111; }
+
+        @media (max-width: 767px) {
+            .hamburger-btn {
+                top: 1.2rem; right: 1.2rem;
+                width: 46px; height: 46px;
+            }
+        }
+
+        /* 캐릭터 패널 오버레이 */
+        .char-panel-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.3);
+            z-index: 300;
+            display: none;
+        }
+        .char-panel-overlay.active { display: block; }
+
+        .char-panel {
+            position: fixed;
+            top: 0; right: 0;
+            width: 100%;
+            height: 100%;
+            background: #f1f3f2;
+            z-index: 310;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            overflow-y: auto;
+            font-family: 'Galmuri9', sans-serif;
+        }
+        .char-panel.active { transform: translateX(0); }
+
+        .char-panel-topbar {
+            background: linear-gradient(to bottom, #ddeeff, #10c6b3);
+            border-bottom: 2px solid #6699cc;
+            padding: 10px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 5;
+        }
+        .char-panel-topbar .logo2 {
+            font-size: 20px;
+            font-weight: bold;
+            color: #336699;
+            font-family: 'Galmuri9', sans-serif;
+        }
+        .char-panel-close {
+            font-size: 13px;
+            background: #fff;
+            border: 1px solid #6699cc;
+            color: #336699;
+            padding: 5px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .char-panel-close:hover { background: #f0f8ff; }
+
+        .char-grid-wrap {
+            max-width: 1600px;
+            margin: 16px auto;
+            padding: 0 14px;
+        }
+        .char-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 0;
+            border: 1px solid #999;
+        }
+        .char-cell {
+            position: relative;
+            aspect-ratio: 1;
+            border-right: 1px solid #ccc;
+            border-bottom: 1px solid #ccc;
+            background: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            overflow: hidden;
+            transition: background 0.3s ease;
+        }
+        .char-cell:hover { filter: brightness(0.96); }
+        .char-cell.seen { color: #fff; }
+        .char-cell .char-label {
+            font-size: 11px;
+            text-align: center;
+            padding: 4px;
+            word-break: keep-all;
+            z-index: 2;
+            font-family: 'Galmuri9', sans-serif;
+        }
+        .char-cell.seen .char-label { color: #fff; }
+        .char-cell img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0; left: 0;
+        }
+
+        .char-lightbox {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.85);
+            z-index: 999;
+            align-items: center;
+            justify-content: center;
+            cursor: zoom-out;
+        }
+        .char-lightbox.active { display: flex; }
+        .char-lightbox img {
+            max-width: 85%; max-height: 85%;
+            border: 4px solid #fff;
+            border-radius: 4px;
+        }
+        .char-lightbox .lb-name {
+            position: absolute;
+            bottom: 6%;
+            color: #fff;
+            font-size: 16px;
+            background: rgba(0,0,0,0.5);
+            padding: 6px 16px;
+            border-radius: 4px;
+        }
+
+        @media (max-width: 900px) {
+            .char-grid { grid-template-columns: repeat(5, 1fr); }
+            .char-cell .char-label { font-size: 9px; }
+        }
+        @media (max-width: 600px) {
+            .char-grid { grid-template-columns: repeat(4, 1fr); }
+        }
+        @media (max-width: 420px) {
+            .char-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- ===== 데스크탑 ===== -->
+    <a href="index.html" class="logo">2000년대 캐릭터</a>
+
+    <div class="desktop-grid">
+        <div class="cell cell-empty"></div>
+        <a href="animal-based.html" class="cell cell-animal">
+            <span class="cell-title">동물형</span>
+        </a>
+
+        <a href="human-based.html" class="cell cell-human">
+            <span class="cell-title">인간형</span>
+        </a>
+
+        <a href="object-based.html" class="cell cell-object">
+            <span class="cell-title">비인간형</span>
+        </a>
+    </div>
+
+    <!-- ===== 모바일 ===== -->
+    <div class="mobile-wrap">
+        <div class="mobile-top">
+            <span class="mobile-logo">2000년대 캐릭터</span>
+        </div>
+
+        <div class="mobile-divider"></div>
+
+        <div class="mobile-bottom">
+            <div class="carousel" id="carousel">
+                <a href="human-based.html" class="carousel-slide slide-human">
+                    <span class="slide-title">인간형</span>
+                </a>
+                <a href="animal-based.html" class="carousel-slide slide-animal">
+                    <span class="slide-title">동물형</span>
+                </a>
+                <a href="object-based.html" class="carousel-slide slide-object">
+                    <span class="slide-title">비인간형</span>
+                </a>
+            </div>
+            <button class="carousel-btn carousel-prev" id="prevBtn"></button>
+            <button class="carousel-btn carousel-next" id="nextBtn"></button>
+        </div>
+    </div>
+    <!-- 햄버거 버튼 -->
+    <button class="hamburger-btn" id="hamburgerBtn" aria-label="캐릭터 목록 열기">
+    </button>
+
+    <!-- 캐릭터 패널 -->
+    <div class="char-panel-overlay" id="charPanelOverlay"></div>
+    <div class="char-panel" id="charPanel">
+        <div class="char-panel-topbar">
+            <div class="logo2">2000년대 캐릭터</div>
+            <button class="char-panel-close" id="charPanelClose">닫기 ✕</button>
+        </div>
+        <div class="char-grid-wrap">
+            <div class="char-grid" id="charGrid"></div>
+        </div>
+    </div>
+
+    <div class="char-lightbox" id="charLightbox">
+        <img id="charLightboxImg" src="" alt="">
+        <div class="lb-name" id="charLightboxName"></div>
+    </div>
+
+    <script>
+        // 캐러셀
+        const carousel = document.getElementById('carousel');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        let currentIndex = 0;
+        const totalSlides = 3;
+
+        if (nextBtn && carousel) {
+            nextBtn.addEventListener('click', () => {
+                if (currentIndex < totalSlides - 1) {
+                    currentIndex++;
+                    carousel.style.transform = `translateX(-${currentIndex * 33.3333}%)`;
+                }
+            });
+        }
+        if (prevBtn && carousel) {
+            prevBtn.addEventListener('click', () => {
+                if (currentIndex > 0) {
+                    currentIndex--;
+                    carousel.style.transform = `translateX(-${currentIndex * 33.3333}%)`;
+                }
+            });
+        }
+
+        // ===== 캐릭터 패널 =====
+        const characters = [
+            { id: "zollaman",     name: "졸라맨",        type: "page",  href: "zollaman.html",     color: "#3cb6e9" },
+            { id: "woobi-boy",    name: "우비소년",       type: "page",  href: "woobi-boy.html",    color: "#3cb6e9" },
+            { id: "ddalki",       name: "딸기",          type: "page",  href: "ddalki.html",       color: "#3cb6e9" },
+            { id: "congcong",     name: "콩콩이",          type: "page",  href: "congcong.html",     color: "#3cb6e9" },
+            { id: "sue",          name: "슈",            type: "page",  href: "sue.html",          color: "#3cb6e9" },
+            { id: "pucca",        name: "뿌까",          type: "page",  href: "pucca.html",        color: "#3cb6e9" },
+            { id: "mashimaro",    name: "마시마로",       type: "page",  href: "mashimaro.html",    color: "#ee5dd8" },
+            { id: "bluebear",     name: "블루베어",       type: "page",  href: "bluebear.html",     color: "#ee5dd8" },
+            { id: "bboong",       name: "뿡뿡이",          type: "page",  href: "bboong.html",       color: "e4e80c" },
+            { id: "gamjadori",    name: "감자도리",       type: "page",  href: "gamjadori.html",    color: "#e4e80c" },
+            { id: "holeman",      name: "홀맨",          type: "page",  href: "holeman.html",      color: "e4e80c" },
+            { id: "koongya",      name: "쿵야",          type: "page",  href: "koongya.html",      color: "e4e80c" },
+            { id: "mongyi",       name: "몽이",          type: "page",  href: "mongyi.html",       color: "e4e80c" },
+
+          
+            { id: "gamjacoco",    name: "감자코코",       type: "photo", img: "감자코코.png",    color: "#12e7d1" },
+            { id: "zollagirl",    name: "졸라걸",        type: "photo", img: "졸라걸.webp",    color: "#2bd8c6" },
+            { id: "kkotnimi",     name: "꽃님이",        type: "photo", img: "images/kkotnimi.png", color: "#5ff0e0" },
+            { id: "pinkbear",     name: "핑크베어",      type: "photo", img: "핑크베어.png",   color: "#84f7ea" },
+            { id: "mel",          name: "메에로",        type: "photo", img: "메에로.png",     color: "#3edcc9" },
+            { id: "baetsal",      name: "뱃살공주",      type: "photo", img: "images/baetsal.png", color: "#0fcab7" },
+            { id: "otagun",       name: "오타군",        type: "photo", img: "images/otagun.png", color: "#0ca896" },
+            { id: "nn",           name: "눈누",          type: "photo", img: "눈누.png",       color: "#6af3e4" },
+            { id: "elbisu",       name: "엘비수",        type: "photo", img: "엘비수.png",     color: "#27cbb8" },
+            { id: "토디",         name: "토디",          type: "photo", img: "토디.png",       color: "#099c8c" },
+            { id: "kkotnimi2",    name: "꽃님이",        type: "photo", img: "꽃님이.png",     color: "#4ce6d4" },
+            { id: "ttobe",        name: "또베",          type: "photo", img: "또베.png",       color: "#7af5e8" },
+            { id: "ria",          name: "리아",          type: "photo", img: "리아.png",       color: "#19d3c0" },
+            { id: "ringring",     name: "링링",          type: "photo", img: "링링.png",       color: "#9afbf0" },
+            { id: "miza",         name: "미자",          type: "photo", img: "미자.png",       color: "#0da391" },
+            { id: "buddaking",    name: "빠다킹",        type: "photo", img: "빠다킹.png",     color: "#30d7c4" },
+            { id: "bin",          name: "빈",            type: "photo", img: "빈.png",         color: "#068d80" },
+            { id: "ppyak",        name: "뺙이",          type: "photo", img: "뺙이.png",       color: "#63f0e2" },
+            { id: "ppungdosa",    name: "뻥도사",        type: "photo", img: "images/ppungdosa.png", color: "#25d0be" },
+            { id: "soso",         name: "소소",          type: "photo", img: "소소.png",       color: "#8df8ec" },
+            { id: "slowppaeteru", name: "슬로우빠떼루",   type: "photo", img: "슬로우빠떼루.png", color: "#0b9788" },
+            { id: "abyo",         name: "아뵤",          type: "photo", img: "아뵤.png",       color: "#35decb" },
+            { id: "uwo",          name: "우워",          type: "photo", img: "우워.png",       color: "#05a08f" },
+            { id: "jangttung",    name: "장뚱",          type: "photo", img: "장뚱.png",       color: "#56ebda" },
+            { id: "chohee",       name: "초희",          type: "photo", img: "초희.webp",      color: "#1bcfbc" },
+            { id: "ching",        name: "칭",            type: "photo", img: "칭.png",         color: "#74f4e7" },
+            { id: "hoo",          name: "호오",          type: "photo", img: "호오.png",       color: "#0eab9a" },
+            { id: "쿵후맨",        name: "쿵후맨",        type: "photo", img: "쿵후맨.png",     color: "#49e7d5" },
+            { id: "졸똘이",        name: "졸라똘똘이",    type: "photo", img: "졸라똘똘이.png", color: "#92f9ed" },
+            { id: "건달프",        name: "건달프",        type: "photo", img: "건달프.png",     color: "#22c8b6" },
+            { id: "꾸자",         name: "꾸자",          type: "photo", img: "꾸자.png",       color: "#14b9a8" },
+            { id: "두건맨",        name: "두건맨",        type: "photo", img: "두건맨.png",     color: "#3fe0cd" },
+
+        ];
+
+        const STORAGE_KEY = "char_seen_v1";
+
+        function getSeen() {
+            try {
+                return JSON.parse(sessionStorage.getItem(STORAGE_KEY)) || {};
+            } catch (e) {
+                return {};
+            }
+        }
+
+        function markSeen(id) {
+            const seen = getSeen();
+            seen[id] = true;
+            sessionStorage.setItem(STORAGE_KEY, JSON.stringify(seen));
+        }
+
+        function renderCharGrid() {
+            const grid = document.getElementById('charGrid');
+            grid.innerHTML = "";
+            const seen = getSeen();
+
+            characters.forEach(ch => {
+                const cell = document.createElement('div');
+                cell.className = 'char-cell';
+
+                if (seen[ch.id]) {
+                    cell.classList.add('seen');
+                    cell.style.background = ch.color || '#a98ce0';
+                }
+
+                const label = document.createElement('div');
+                label.className = 'char-label';
+                label.textContent = ch.name;
+                cell.appendChild(label);
+
+                cell.addEventListener('click', () => {
+                    markSeen(ch.id);
+                    if (ch.type === 'page') {
+                        renderCharGrid();
+                        setTimeout(() => {
+                        window.location.href = ch.href;
+                      }, 100);  
+                    } else {
+                        openCharLightbox(ch);
+                        renderCharGrid();
+                    }
+                });
+
+                grid.appendChild(cell);
+            });
+        }
+
+        function openCharLightbox(ch) {
+            const lb = document.getElementById('charLightbox');
+            const img = document.getElementById('charLightboxImg');
+            const name = document.getElementById('charLightboxName');
+            img.src = ch.img;
+            img.alt = ch.name;
+            name.textContent = ch.name;
+            lb.classList.add('active');
+        }
+
+        document.getElementById('charLightbox').addEventListener('click', () => {
+            document.getElementById('charLightbox').classList.remove('active');
+        });
+
+        const hamburgerBtn = document.getElementById('hamburgerBtn');
+        const charPanel = document.getElementById('charPanel');
+        const charPanelOverlay = document.getElementById('charPanelOverlay');
+        const charPanelClose = document.getElementById('charPanelClose');
+
+        function openPanel() {
+            renderCharGrid();
+            charPanel.classList.add('active');
+            charPanelOverlay.classList.add('active');
+        }
+        function closePanel() {
+            charPanel.classList.remove('active');
+            charPanelOverlay.classList.remove('active');
+        }
+
+        hamburgerBtn.addEventListener('click', openPanel);
+        charPanelClose.addEventListener('click', closePanel);
+        charPanelOverlay.addEventListener('click', closePanel);
+
+        if (window.location.hash === '#open=panel') {
+            openPanel();
+            history.replaceState(null, '', window.location.pathname);
+        }
+    </script>
+</body>
+</html>

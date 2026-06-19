@@ -1,0 +1,308 @@
+.back-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--color-black);
+    font-size: 0.8125rem;
+    margin-bottom: 2rem;
+}
+
+.back-button:hover {
+    text-decoration: underline;
+}
+
+.back-button svg {
+    width: 1rem;
+    height: 1rem;
+}
+
+/* Category Header */
+.category-header {
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--color-black);
+}
+
+.category-indicator {
+    display: none;
+}
+
+.category-page-title {
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--color-black);
+    letter-spacing: -0.02em;
+}
+
+@media (min-width: 768px) {
+    .category-page-title {
+        font-size: 3.5rem;
+    }
+}
+
+.category-human-title,\n.category-animal-title,\n.category-object-title {
+    color: var(--color-black);
+}
+
+.category-page-description {
+    font-size: 0.875rem;
+    color: var(--color-gray);
+}
+
+/* Characters Grid */
+.characters-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 4rem;
+}
+
+@media (min-width: 768px) {
+    .characters-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .characters-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+/* Character Card */
+.character-card {
+    position: relative;
+    overflow: hidden;
+    border: none !important; /* 기존 테두리 강제 제거 */
+    background: none;
+}
+
+.characters-grid .character-card:nth-child(2n) {
+    border-right: none;
+}
+
+@media (min-width: 768px) {
+    .characters-grid .character-card:nth-child(2n) {
+        border-right: 1px solid var(--color-black);
+    }
+    .characters-grid .character-card:nth-child(3n) {
+        border-right: none;
+    }
+}
+
+@media (min-width: 1024px) {
+    .characters-grid .character-card:nth-child(3n) {
+        border-right: 1px solid var(--color-black);
+    }
+    .characters-grid .character-card:nth-child(4n) {
+        border-right: none;
+    }
+}
+
+/* 🛠️ 수정: 전체 화면 레이어가 마우스 클릭을 막지 않도록 설정 */
+.category {
+    min-width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+}
+.category * {
+    pointer-events: auto;
+}
+
+/* Character Image Container */
+.character-image-container {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1; /* 1:1 정사각형 비율 유지 */
+    overflow: hidden;
+}
+
+/* 🛠️ 수정: 이미지가 구석에 짱박히지 않고 칸에 꽉 차도록 100%로 변경 */
+.card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+}
+
+/* 마우스 올렸을 때 이미지 살짝 확대 */
+.character-card:hover .card-img {
+    transform: scale(1.05);
+}
+
+/* 🌟 이미지 위에 얹어질 설명 레이어 */
+.character-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.75);
+    color: var(--color-white);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1.5rem;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+/* 마우스가 닿았을 때(Hover) 설명창을 보이게 만듦 */
+.character-card:hover .character-overlay {
+    opacity: 1;
+}
+
+/* 오버레이 내부 글씨 스타일링 */
+.character-name {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+}
+
+.character-en {
+    font-size: 0.8rem;
+    color: #cccccc;
+    margin-bottom: 1rem;
+}
+
+/* 🛠️ 수정: 세미콜론 및 닫는 중괄호 복구 완료 */
+.character-short-desc {
+    font-size: 0.85rem;
+    line-height: 1.5;
+    word-break: keep-all;
+}
+
+/* Quick Info Box */
+.quick-info {
+    border: 1px solid var(--color-black);
+    padding: 1.5rem;
+}
+
+.quick-info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+}
+
+.quick-info-item {
+    padding: 0;
+}
+
+.quick-info-label {
+    font-size: 0.6875rem;
+    color: var(--color-gray);
+    margin-bottom: 0.25rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.quick-info-value {
+    font-weight: 600;
+    font-size: 0.8125rem;
+    color: var(--color-black);
+}
+
+/* Detailed Info Section */
+.detail-section {
+    border: 1px solid var(--color-black);
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.detail-section h2 {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+    color: var(--color-black);
+}
+
+.detail-section h3 {
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+    color: var(--color-black);
+}
+
+.detail-section p {
+    color: var(--color-gray);
+    line-height: 1.8;
+    font-size: 0.8125rem;
+    margin-bottom: 0.75rem;
+}
+
+.detail-section p:last-child {
+    margin-bottom: 0;
+}
+
+/* Features List */
+.features-list {
+    list-style: none;
+    padding: 0;
+}
+
+.features-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    margin-bottom: 0.5rem;
+    color: var(--color-gray);
+    font-size: 0.8125rem;
+}
+
+.features-list li:before {
+    content: '—';
+    color: var(--color-black);
+    flex-shrink: 0;
+}
+
+/* Related Characters */
+.related-characters {
+    margin-top: 4rem;
+}
+
+.related-characters h2 {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    color: var(--color-black);
+}
+
+.related-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0;
+    border: 1px solid var(--color-black);
+}
+
+@media (min-width: 768px) {
+    .related-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .related-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+.related-grid {
+    border-right: 1px solid var(--color-black);
+    border-bottom: 1px solid var(--color-black);
+}
+
+.related-grid :last-child {
+    border-right: none;
+}
+
+/* Color Indicators - hidden in minimal style */
+.color-indicator {
+    display: none;
+}

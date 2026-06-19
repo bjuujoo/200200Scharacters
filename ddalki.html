@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,400;1,500;1,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/galmuri@latest/dist/galmuri.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>딸기's Profile | human-based</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Galmuri9', sans-serif;
+            background-color: #efefef;
+            font-size: 12px;
+            color: #333;
+        }
+
+        a { color: #6699cc; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        body {
+            background-image: url("배경.jpg");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+
+        .topbar {
+            background: linear-gradient(to bottom, #ddeeff, #10c6b3);
+            border-bottom: 2px solid #6699cc;
+            padding: 8px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        .topbar .logo { font-size: 20px; font-weight: bold; color: #336699; font-family: "Galmuri9", serif;
+            top: 1.5rem; left: 2rem;
+            z-index: 100;
+            padding: 4px 15px;
+            font-size: 25px;
+            font-weight: 600;
+            text-decoration: none;
+            line-height: 1.2;
+            letter-spacing: -1px; }
+        .topbar .back-btn {
+            font-size: 11px; background: #6699cc; color: white; border: none;
+            padding: 4px 12px; cursor: pointer; text-decoration: none;
+            display: inline-block; border-radius: 4px;
+        }
+        .topbar .back-btn:hover { background: #4477aa; text-decoration: none; }
+
+        /* 전체 3단 레이아웃 */
+        .container {
+            max-width: 1100px;
+            width: 100%;
+            margin: 14px auto;
+            background: white;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 16px;
+            display: flex;
+            gap: 14px;
+        }
+
+        /* 왼쪽 프로필 */
+        .left-col { width: 220px; flex-shrink: 0; }
+
+        /* 오른쪽 2단 */
+        .right-wrap { flex: 1; min-width: 0; display: flex; gap: 14px; }
+        .mid-col { flex: 1; min-width: 0; }
+        .far-col { width: 220px; flex-shrink: 0; }
+
+
+        /* Profile */
+        .profile-name { font-size: 25px; font-weight: bold; color: #336699; margin-bottom: 8px; font-family: Georgia, serif; }
+
+        .profile-pic {
+            border: 2px solid #6699cc; border-radius: 3px;
+            background: #f0f8ff; display: flex;
+            justify-content: center; align-items: center;
+            height: 220px; margin-bottom: 8px;
+            animation: sway 8s ease-in-out infinite;
+            transform-origin: top center;
+            overflow: hidden;
+        }
+        .profile-pic img {
+            width: 100%; height: 100%; object-fit: cover;
+        }
+
+        .stick-figure { animation: float 3s ease-in-out infinite; }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .status-quote {
+            font-style: italic; font-size: 11px; color: #555;
+            background: #f0f8ff; border-left: 3px solid #6699cc;
+            border-radius: 0 2px 2px 0; padding: 6px 9px; margin-bottom: 8px;
+        }
+
+        .online-dot { width: 8px; height: 8px; background: #44cc44; border-radius: 50%; display: inline-block; margin-right: 4px; }
+        .meta-line { font-size: 10px; color: #555; margin-bottom: 3px; }
+
+        /* Boxes */
+        .box { border: 1px solid #10c6b3; margin-bottom: 12px; border-radius: 3px; overflow: hidden;
+             animation: sway 6s ease-in-out infinite;
+             transform-origin: top center;
+             }
+        .box:nth-child(2n) { animation-duration: 7s; animation-delay: -1.5s; }
+        .box:nth-child(3n) { animation-duration: 5.5s; animation-delay: -3s; }
+        .box:nth-child(4n) { animation-duration: 6.5s; animation-delay: -2s; }
+        .box:nth-child(5n) { animation-duration: 7.5s; animation-delay: -4s; }
+
+        @keyframes sway {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-3px); }
+        }
+        .box-header { background: #10c6b3; color: white; padding: 6px 9px; font-weight: bold; font-size: 11px; }
+        .box-header a { color: #e0fff9; font-weight: normal; font-size: 10px; }
+        .box-content { padding: 8px; background: white; }
+
+        .contact-links { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
+        .contact-links a { font-size: 10px; color: #336699; display: flex; align-items: center; gap: 4px; padding: 2px 0; }
+
+        .url-box { font-size: 9px; border: 1px solid #ccc; border-radius: 3px; padding: 4px; background: #f9f9f9; word-break: break-all; color: #555; }
+
+        /* Profile table */
+        .zollamanprofile { width: 100%; border-collapse: collapse; font-size: 10px; }
+        .zollamanprofile td { padding: 4px 6px; border: 1px solid #ddd; vertical-align: top; }
+        .zollamanprofile td.label { background: #d1f9ec; font-weight: bold; width: 75px; color: #224466; }
+
+        /* Blurbs */
+        .blurb-title { color: #ff6600; font-weight: bold; margin: 8px 0 4px; font-size: 12px; }
+        .blurb-text { font-size: 11px; line-height: 1.6; }
+
+        /* Blog */
+        .blog-list { list-style: none; }
+        .blog-list li { border-bottom: 1px dotted #ccc; padding: 5px 0; font-size: 10px; }
+
+        .moreinformation { list-style: none; }
+        .moreinformation li { border-bottom: 1px dotted #ccc; padding: 4px 8px; font-size: 10px; }
+
+
+        /* YouTube */
+        .yt-wrap { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 4px; }
+        .yt-wrap iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+
+        /* Friends */
+        .friends-grid { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 6px; }
+        .friend-item { text-align: center; width: 58px; }
+        .friend-avatar {
+            width: 50px; height: 50px; background: #d1f9ec;
+            border: 1px solid #4477aa; border-radius: 4px;
+            margin: 0 auto 3px; display: flex;
+            align-items: center; justify-content: center; font-size: 22px;
+            overflow: hidden;
+        }
+        .friend-avatar img {
+            width: 100%; height: 100%; object-fit: cover;
+        }
+        .friend-item a { font-size: 9px; }
+
+        /* Comments */
+        .comments-table { width: 100%; border-collapse: collapse; font-size: 10px; }
+        .comments-table td { padding: 6px; border: 1px solid #ddd; vertical-align: top; }
+        .comment-avatar {
+            width: 40px; height: 40px; background: #d1f9ec;
+            border: 1px solid #6699cc; border-radius: 4px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 18px; margin: 0 auto 3px;
+            overflow: hidden;
+        }
+        .comment-avatar img {
+            width: 100%; height: 100%; object-fit: cover;
+        }
+        .comment-username { font-weight: bold; color: #336699; font-size: 10px; display: block; text-align: center; }
+        .comment-date { font-size: 9px; color: #888; display: block; margin-bottom: 3px; }
+        .comment-text { line-height: 1.5; }
+        .comment-reply { font-size: 9px; color: #336699; font-style: italic; margin-top: 4px; }
+
+        /* Footer */
+        .footer { text-align: center; font-size: 10px; color: #888; margin: 6px 0 14px; padding-top: 6px; border-top: 1px solid #ccc; }
+        .footer a { color: #6699cc; margin: 0 4px; }
+
+        /* RESPONSIVE */
+        @media (max-width: 900px) {
+            .right-wrap { flex-direction: column; }
+            .far-col { width: 100%; }
+        }
+        @media (max-width: 600px) {
+            .container { flex-direction: column; margin: 8px; padding: 12px; }
+            .left-col { width: 100%; }
+            .profile-pic { height: 180px; }
+            .contact-links { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 400px) {
+            .profile-name { font-size: 18px; }
+            .contact-links { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="topbar">
+    <div class="logo">2000년대 캐릭터</div>
+    <a href="javascript:history.back()" class="back-btn">← 돌아가기</a>
+</div>
+
+<div class="container">
+
+    <!-- 왼쪽: 프로필 -->
+    <div class="left-col">
+        <div class="profile-name">딸기</div>
+
+        <div class="profile-pic">
+            <img src="딸기.png" alt="딸기">
+        </div>
+
+        <div class="status-quote">어떻게 이럴 수가 있어요! 나 이거 정말 화가 나서...</div>
+        <div class="meta-line"><span class="online-dot"></span>Last active: 방금 전</div>
+        <div class="meta-line"><b>Mood:</b>남을 돕자</div>
+
+        <div class="box">
+            <div class="box-header">최근 게시물</div>
+            <div class="box-content">
+                <ul class="blog-list">
+                    <li></li>
+                    <li></li>
+                    <li> </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="box">
+            <div class="box-header">More Information...</div>
+            <div class="box-content">
+                <ul class="moreinformation">
+                    <li>우비소년은 조금은 특이한 외모와 멍청 하기까지 한 순진한 성격 때문에 함께 사는 우거지맨션 주민들의 화풀이 대상이 되곤 한다.<br>우비소년의 탄생은 e-card를 통해서였다. 화이트데이를 전후로 등장한 이 캐릭터는 발렌타인데이에 초콜릿 하나 못 받는 불쌍한 남자 를 대표하는 데 컨셉트를 맞춰 제작되었다. 이후 e-card를 통해 성장을 거듭해 플래시 애니메이션으로 다시 네티즌을 만나게 되었는데, 전문 애니메이터와 성우를 동원해 완성도를 높였다. 우비소년의 높은 인기는 함께 출발한 사이트 intz.com의 수익을 급성장시켜 작품 제작비를 회수하고도 남을 정도이다. 우비소년의 제작사인 로이비주얼은 별도의 홈페이지 www.woobiboy.com을 통해 에피소드를 연재하며 다양한 캐릭터 상품도 판매하고 있다.
+                    그리고 기존의 애니메이션을 활용하여 다른 매체에 진출하기 위한 준비도 병행하고 있다.
+    
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- 오른쪽 2단 -->
+    <div class="right-wrap">
+
+        <!-- 가운데 -->
+        <div class="mid-col">
+
+            <div class="box">
+                <div class="box-header">프로필</div>
+                <div class="box-content">
+                    <table class="zollamanprofile">
+                        <tr><td class="label">이름</td><td>딸기(애칭)</td></tr>
+                        <tr><td class="label">유형</td><td>인간형</td></tr>
+                        <tr><td class="label">성격</td><td>변덕쟁이, 고집쟁이, 심술꿀기</td></tr>
+                        <tr><td class="label">별자리</td><td>쌍둥이자리</td></tr>
+                        <tr><td class="label">취미</td><td>스티커 사진 모으기, 애완 고양이 '딸랑이' 훈련시키기</td></tr>
+                        <tr><td class="label">특기</td><td>나이에 비해 성숙하고 성장 속도가 무지 빠른 특이체질</td></tr>
+                        <tr><td class="label">기타</td><td>에로틱한 것에 관심이 많음</td></tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="box">
+                <div class="box-header">내 소개</div>
+                <div class="box-content">
+                    <div class="blurb-title">About me:</div>
+                    <p class="blurb-text">때에 따라 오만 가지 취향과 스타일을 친구들에게 선보인다. 독특한 패션에 관심이 많고, 일관성 없는 생활 방식으로 산만한 일상을 보내고 있다.</p>
+                </div>
+            </div>
+
+        <!-- 오른쪽 -->
+        <div class="far-col">
+        <div class="box">
+            <div class="box-header">📺 딸기 영상 보기</div>
+            <div class="box-content">
+                <div class="yt-wrap">
+                    <iframe
+                        src="https://www.youtube.com/embed/A3KpXQ5qcsI"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+        </div>
+
+            <div class="box">
+                <div class="box-header">딸기's Friend Space</div>
+                <div class="box-content">
+                    <p style="font-size:10px;margin-bottom:6px;"></p>
+                    <div class="friends-grid">
+                        <div class="friend-item"><div class="friend-avatar"><img src="수박.png" alt="수박"></div><a href="#">수박</a></div>
+                        <div class="friend-item"><div class="friend-avatar"><img src="레몬.png" alt="레몬"></div><a href="#">레몬</a></div>
+                        <div class="friend-item"><div class="friend-avatar"><img src="바나나.png" alt="바나나"></div><a href="#">바나나</a></div>
+                        <div class="friend-item"><div class="friend-avatar"><img src="똘밤.png" alt="똘밤"></div><a href="#">똘밤</a></div>
+                        <div class="friend-item"><div class="friend-avatar"><img src="똥치미.png" alt="똥치미"></div><a href="#">똥치미</a></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="footer">
+    ©2026 2000s characters
+</div>
+
+</body>
+</html>

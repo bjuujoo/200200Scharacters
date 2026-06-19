@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>인간형 캐릭터 - 2000s CHARACTERS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/galmuri@latest/dist/galmuri.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #5cf9c2;
+      font-family: 'Galmuri9', sans-serif;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      position: relative;
+    }
+    .back-button {
+      position: fixed;
+      top: 2.1%; right: 30px;
+      padding: 4px 12px; cursor: pointer; 
+      z-index: 100;
+      color: #111;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      letter-spacing: 0.05em;
+      opacity: 0.5;
+      transition: opacity 0.2s;
+      
+    }
+    .back-button:hover { opacity: 1; }
+    .tooltip {
+      position: fixed;
+      pointer-events: none;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      color: #111;
+      opacity: 0;
+      transition: opacity 0.15s;
+      white-space: nowrap;
+      z-index: 200;
+    }
+    .tooltip.visible { opacity: 1; }
+    .dot-link {
+      position: absolute;
+      display: block;
+      cursor: grab;
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 0 7px #fff, 0 0 10px #fff, 0 0 20px #fff;
+      overflow: hidden;
+      will-change: transform;
+      user-select: none;
+    }
+    .dot-link.dragging { cursor: grabbing; box-shadow: 0 0 0 2px #999; }
+    .dot-link:hover { box-shadow: 0 0 0 5px #fff; }
+    .dot-link img {
+      display: block;
+      width: 100%; height: 100%;
+      object-fit: contain;
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+
+  <a href="index.html" class="back-button">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <line x1="19" y1="12" x2="5" y2="12"></line>
+      <polyline points="12 19 5 12 12 5"></polyline>
+    </svg>
+    돌아가기
+  </a>
+
+  <div class="tooltip" id="tooltip"></div>
+
+  <a class="dot-link" href="zollaman.html"  data-name="졸라맨 · Zollaman"><img src="졸라맨.png" alt="졸라맨"></a>
+  <a class="dot-link" href="woobi-boy.html" data-name="우비소년 · Woobi Boy"><img src="우비소년.png" alt="우비소년"></a>
+  <a class="dot-link" href="sue.html"       data-name="아바타 스타 슈 · Avatar Star Sue"><img src="이름슈.png" alt="아바타 스타 슈"></a>
+  <a class="dot-link" href="congcong.html"  data-name="콩콩이 · congcong"><img src="콩콩.png" alt="콩콩이"></a>
+  <a class="dot-link" href="ddalki.html"     data-name="딸기 · Dalki"><img src="딸기.png" alt="딸기"></a>
+  <a class="dot-link" href="Pucca.html"     data-name="뿌까 · Pucca"><img src="뿌까.jpg" alt="뿌까"></a>
+
+  <script>
+    const tooltip = document.getElementById('tooltip');
+    const dotEls  = document.querySelectorAll('.dot-link');
+    const SIZES   = [190, 95, 75, 130, 125, 100 ];
+    const SPEED   = 4;
+    const balls   = [];
+
+    function placeWithoutOverlap(r, existing) {
+      const W = window.innerWidth;
+      const H = window.innerHeight;
+      let x, y, ok, tries = 0;
+      do {
+        ok = true;
+        x = r + Math.random() * (W - r * 2);
+        y = r + Math.random() * (H - r * 2);
+        for (const b of existing) {
+          const dx = x - b.x, dy = y - b.y;
+          if (Math.sqrt(dx*dx + dy*dy) < r + b.r + 4) { ok = false; break; }
+        }
+        tries++;
+      } while (!ok && tries < 200);
+      return { x, y };
+    }
+
+    function randVelocity() {
+      const angle = Math.random() * Math.PI * 2;
+      return { vx: Math.cos(angle) * SPEED, vy: Math.sin(angle) * SPEED };
+    }
+
+    dotEls.forEach((el, i) => {
+      const r = SIZES[i] / 2;
+      el.style.width  = SIZES[i] + 'px';
+      el.style.height = SIZES[i] + 'px';
+
+      const pos = placeWithoutOverlap(r, balls);
+      const vel = randVelocity();
+      const b = {
+        el, r,
+        x: pos.x, y: pos.y,
+        vx: vel.vx, vy: vel.vy,
+        dragging: false,
+        dragOffsetX: 0, dragOffsetY: 0,
+        history: [],
+      };
+      balls.push(b);
+
+      el.addEventListener('mouseenter', () => {
+        if (!b.dragging) {
+          tooltip.textContent = el.dataset.name;
+          tooltip.classList.add('visible');
+        }
+      });
+      el.addEventListener('mousemove', e => {
+        tooltip.style.left = (e.clientX + 14) + 'px';
+        tooltip.style.top  = (e.clientY - 8)  + 'px';
+      });
+      el.addEventListener('mouseleave', () => tooltip.classList.remove('visible'));
+
+      el.addEventListener('mousedown', e => {
+        e.preventDefault();
+        b.dragging = true;
+        b.vx = 0; b.vy = 0;
+        b.dragOffsetX = e.clientX - b.x;
+        b.dragOffsetY = e.clientY - b.y;
+        b.history = [];
+        el.classList.add('dragging');
+        tooltip.classList.remove('visible');
+      });
+
+      el.addEventListener('click', e => {
+        if (b.history.length > 2) e.preventDefault();
+      });
+    });
+
+    window.addEventListener('mousemove', e => {
+      for (const b of balls) {
+        if (!b.dragging) continue;
+        const now = Date.now();
+        const newX = e.clientX - b.dragOffsetX;
+        const newY = e.clientY - b.dragOffsetY;
+        b.history.push({ x: newX, y: newY, t: now });
+        if (b.history.length > 5) b.history.shift();
+        b.x = newX;
+        b.y = newY;
+      }
+    });
+
+    window.addEventListener('mouseup', () => {
+      for (const b of balls) {
+        if (!b.dragging) continue;
+        b.dragging = false;
+        b.el.classList.remove('dragging');
+        if (b.history.length >= 2) {
+          const last  = b.history[b.history.length - 1];
+          const first = b.history[0];
+          const dt = (last.t - first.t) || 1;
+          b.vx = (last.x - first.x) / dt * 16;
+          b.vy = (last.y - first.y) / dt * 16;
+          const spd = Math.sqrt(b.vx*b.vx + b.vy*b.vy);
+          const MAX = 18;
+          if (spd > MAX) { b.vx = b.vx/spd*MAX; b.vy = b.vy/spd*MAX; }
+        } else {
+          b.vx = 0; b.vy = 0;
+        }
+      }
+    });
+
+    function collide(a, b) {
+      const dx = b.x - a.x, dy = b.y - a.y;
+      const dist = Math.sqrt(dx*dx + dy*dy);
+      const minD = a.r + b.r;
+      if (dist >= minD || dist === 0) return;
+      const nx = dx / dist, ny = dy / dist;
+      const push = (minD - dist) / 2;
+      if (!a.dragging) { a.x -= nx * push; a.y -= ny * push; }
+      if (!b.dragging) { b.x += nx * push; b.y += ny * push; }
+      const relVn = (a.vx - b.vx) * nx + (a.vy - b.vy) * ny;
+      if (relVn <= 0) return;
+      if (!a.dragging) { a.vx -= relVn * nx; a.vy -= relVn * ny; }
+      if (!b.dragging) { b.vx += relVn * nx; b.vy += relVn * ny; }
+    }
+
+    function animate() {
+      const W = window.innerWidth, H = window.innerHeight;
+
+      for (let i = 0; i < balls.length; i++)
+        for (let j = i + 1; j < balls.length; j++)
+          collide(balls[i], balls[j]);
+
+      for (const b of balls) {
+        if (b.dragging) {
+          b.el.style.left = (b.x - b.r) + 'px';
+          b.el.style.top  = (b.y - b.r) + 'px';
+          continue;
+        }
+        b.x += b.vx;
+        b.y += b.vy;
+        if (b.x - b.r < 0)  { b.x = b.r;     b.vx = Math.abs(b.vx); }
+        if (b.x + b.r > W)  { b.x = W - b.r; b.vx = -Math.abs(b.vx); }
+        if (b.y - b.r < 0)  { b.y = b.r;     b.vy = Math.abs(b.vy); }
+        if (b.y + b.r > H)  { b.y = H - b.r; b.vy = -Math.abs(b.vy); }
+        b.el.style.left = (b.x - b.r) + 'px';
+        b.el.style.top  = (b.y - b.r) + 'px';
+      }
+
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+  </script>
+
+</body>
+</html>

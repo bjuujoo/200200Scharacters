@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,400;1,500;1,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/galmuri@latest/dist/galmuri.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>아바타 스타 슈's Profile | human-based</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Galmuri9', sans-serif;
+            background-color: #efefef;
+            font-size: 12px;
+            color: #333;
+        }
+
+        a { color: #6699cc; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        .topbar {
+            background: linear-gradient(to bottom, #ddeeff, #10c6b3);
+            border-bottom: 2px solid #6699cc;
+            padding: 8px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        .topbar .logo { font-size: 20px; font-weight: bold; color: #336699; font-family: "Galmuri9", serif;
+            top: 1.5rem; left: 2rem;
+            z-index: 100;
+            padding: 4px 15px;
+            font-size: 25px;
+            font-weight: 600;
+            text-decoration: none;
+            line-height: 1.2;
+            letter-spacing: -1px; }
+        .topbar .back-btn {
+            font-size: 11px; background: #6699cc; color: white; border: none;
+            padding: 4px 12px; cursor: pointer; text-decoration: none;
+            display: inline-block; border-radius: 4px;
+        }
+        .topbar .back-btn:hover { background: #4477aa; text-decoration: none; }
+
+        /* 전체 3단 레이아웃 */
+        .container {
+            max-width: 1100px;
+            width: 100%;
+            margin: 14px auto;
+            background: white;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 16px;
+            display: flex;
+            gap: 14px;
+        }
+
+        /* 왼쪽 프로필 */
+        .left-col { width: 220px; flex-shrink: 0; }
+
+        /* 오른쪽 2단 */
+        .right-wrap { flex: 1; min-width: 0; display: flex; gap: 14px; }
+        .mid-col { flex: 1; min-width: 0; }
+        .far-col { width: 220px; flex-shrink: 0; }
+
+
+        /* Profile */
+        .profile-name { font-size: 25px; font-weight: bold; color: #336699; margin-bottom: 8px; font-family: Georgia, serif; }
+
+        .profile-pic {
+            border: 2px solid #6699cc; border-radius: 3px;
+            background: #f0f8ff; display: flex;
+            justify-content: center; align-items: center;
+            height: 220px; margin-bottom: 8px;
+            animation: sway 8s ease-in-out infinite;
+            transform-origin: top center;
+            overflow: hidden;
+        }
+        .profile-pic img {
+            width: 100%; height: 100%; object-fit: cover;
+        }
+
+        .stick-figure { animation: float 3s ease-in-out infinite; }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .status-quote {
+            font-style: italic; font-size: 11px; color: #555;
+            background: #f0f8ff; border-left: 3px solid #6699cc;
+            border-radius: 0 2px 2px 0; padding: 6px 9px; margin-bottom: 8px;
+        }
+
+        .online-dot { width: 8px; height: 8px; background: #44cc44; border-radius: 50%; display: inline-block; margin-right: 4px; }
+        .meta-line { font-size: 10px; color: #555; margin-bottom: 3px; }
+
+        /* Boxes */
+        .box { border: 1px solid #10c6b3; margin-bottom: 12px; border-radius: 3px; overflow: hidden;
+             animation: sway 6s ease-in-out infinite;
+             transform-origin: top center;
+             }
+        .box:nth-child(2n) { animation-duration: 7s; animation-delay: -1.5s; }
+        .box:nth-child(3n) { animation-duration: 5.5s; animation-delay: -3s; }
+        .box:nth-child(4n) { animation-duration: 6.5s; animation-delay: -2s; }
+        .box:nth-child(5n) { animation-duration: 7.5s; animation-delay: -4s; }
+
+        @keyframes sway {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-3px); }
+        }
+        .box-header { background: #10c6b3; color: white; padding: 6px 9px; font-weight: bold; font-size: 11px; }
+        .box-header a { color: #e0fff9; font-weight: normal; font-size: 10px; }
+        .box-content { padding: 8px; background: white; }
+
+        .contact-links { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
+        .contact-links a { font-size: 10px; color: #336699; display: flex; align-items: center; gap: 4px; padding: 2px 0; }
+
+        .url-box { font-size: 9px; border: 1px solid #ccc; border-radius: 3px; padding: 4px; background: #f9f9f9; word-break: break-all; color: #555; }
+
+        /* Profile table */
+        .zollamanprofile { width: 100%; border-collapse: collapse; font-size: 10px; }
+        .zollamanprofile td { padding: 4px 6px; border: 1px solid #ddd; vertical-align: top; }
+        .zollamanprofile td.label { background: #d1f9ec; font-weight: bold; width: 75px; color: #224466; }
+
+        /* Blurbs */
+        .blurb-title { color: #ff6600; font-weight: bold; margin: 8px 0 4px; font-size: 12px; }
+        .blurb-text { font-size: 11px; line-height: 1.6; }
+
+        /* Blog */
+        .blog-list { list-style: none; }
+        .blog-list li { border-bottom: 1px dotted #ccc; padding: 5px 0; font-size: 10px; }
+
+        .moreinformation { list-style: none; }
+        .moreinformation li { border-bottom: 1px dotted #ccc; padding: 4px 8px; font-size: 10px; }
+
+
+        /* YouTube */
+        .yt-wrap { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 4px; }
+        .yt-wrap iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+
+        /* Friends */
+        .friends-grid { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 6px; }
+        .friend-item { text-align: center; width: 58px; }
+        .friend-avatar {
+            width: 50px; height: 50px; background: #d1f9ec;
+            border: 1px solid #4477aa; border-radius: 4px;
+            margin: 0 auto 3px; display: flex;
+            align-items: center; justify-content: center; font-size: 22px;
+            overflow: hidden;
+        }
+        .friend-avatar img {
+            width: 100%; height: 100%; object-fit: cover;
+        }
+        .friend-item a { font-size: 9px; }
+
+        /* Comments */
+        .comments-table { width: 100%; border-collapse: collapse; font-size: 10px; }
+        .comments-table td { padding: 6px; border: 1px solid #ddd; vertical-align: top; }
+        .comment-avatar {
+            width: 40px; height: 40px; background: #d1f9ec;
+            border: 1px solid #6699cc; border-radius: 4px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 18px; margin: 0 auto 3px;
+            overflow: hidden;
+        }
+        .comment-avatar img {
+            width: 100%; height: 100%; object-fit: cover;
+        }
+        .comment-username { font-weight: bold; color: #336699; font-size: 10px; display: block; text-align: center; }
+        .comment-date { font-size: 9px; color: #888; display: block; margin-bottom: 3px; }
+        .comment-text { line-height: 1.5; }
+        .comment-reply { font-size: 9px; color: #336699; font-style: italic; margin-top: 4px; }
+
+        /* Footer */
+        .footer { text-align: center; font-size: 10px; color: #888; margin: 6px 0 14px; padding-top: 6px; border-top: 1px solid #ccc; }
+        .footer a { color: #6699cc; margin: 0 4px; }
+
+        /* RESPONSIVE */
+        @media (max-width: 900px) {
+            .right-wrap { flex-direction: column; }
+            .far-col { width: 100%; }
+        }
+        @media (max-width: 600px) {
+            .container { flex-direction: column; margin: 8px; padding: 12px; }
+            .left-col { width: 100%; }
+            .profile-pic { height: 180px; }
+            .contact-links { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 400px) {
+            .profile-name { font-size: 18px; }
+            .contact-links { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="topbar">
+    <div class="logo">2000s characters</div>
+    <a href="index.html#open=panel" class="back-btn">← 돌아가기</a>
+</div>
+
+<div class="container">
+
+    <!-- 왼쪽: 프로필 -->
+    <div class="left-col">
+        <div class="profile-name">아바타 스타 슈</div>
+
+        <div class="profile-pic">
+            <img src="슈.png" alt="슈">
+        </div>
+
+        <div class="status-quote">슈비두비루밥 샬랄랄라~♪ (샬라!) 슈비두비루밥 샬랄랄라~♪ (샬라!) 내 이름은 슈! 내 이름은 슈! 모두의 친구 슈! 나는야 아바타 스타~ 슈!</div>
+        <div class="meta-line"><span class="online-dot"></span>Last active: 방금 전</div>
+        <div class="meta-line"><b>Mood:</b>남을 돕자</div>
+
+        <div class="box">
+            <div class="box-header">슈's Latest Blog</div>
+            <div class="box-content">
+                <ul class="blog-list">
+                    <li>달콤한 나의 첫사랑이 찾아오진 않을까~</li>
+                    <li>수업시간에 맛동산 먹는 꿀팁</li>
+                    <li>오빠 나 어떻해...</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="box">
+            <div class="box-header">More Information...</div>
+            <div class="box-content">
+                <ul class="moreinformation">
+                    <li>해태제과에서 운영하는 저연령 대상 웹 콘텐츠 사이트 아이부라보에서 2002년 11월부터 2010년까지 출시된 미디어 프랜차이즈. 아바타 스타인 '수희'가 주인공이며 정체를 숨기고 '슈'로 변신하여 연예인 생활을 하는 중에 방송국, 학교 등에서 겪는 여러 사건들이 주 내용이다.
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- 오른쪽 2단 -->
+    <div class="right-wrap">
+
+        <!-- 가운데 -->
+        <div class="mid-col">
+
+            <div class="box">
+                <div class="box-header">슈's Profile</div>
+                <div class="box-content">
+                    <table class="zollamanprofile">
+                        <tr><td class="label">본명</td><td>수희</td></tr>
+                        <tr><td class="label">유형</td><td>인간형</td></tr>
+                        <tr><td class="label">특성</td><td>마법의 요술봉을 사용하여 초등학생 '수희'에서 톱스타 '슈'로 변신함.
+                        </td></tr>
+                        <tr><td class="label">장래희망</td><td>전 세계 모든 사람에게 사랑받는 최고의 아바타 스타가 되는 것
+                        </td></tr>
+                        <tr><td class="label">생일</td><td>6월 21일</td></tr>
+                        <tr><td class="label">직업</td><td>아바타 스타</td></tr>
+                        <tr><td class="label">좋아하는<br>라면</td><td>꼬들면(계란이랑 파 필수!)</td></tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="box">
+                <div class="box-header">슈's Blurbs</div>
+                <div class="box-content">
+                    <div class="blurb-title">About me:</div>
+                    <p class="blurb-text">보라색 눈동자에 진분홍 만두머리를 한 만 9세 소녀. 좋아하는 색은 분홍색이다.희망을 지켜주고 소원을 들어주는 신비한 마법의 힘을 가진 요술봉의 힘으로 변신해 아이돌로 활동하고 있다.</p>
+                </div>
+            </div>
+
+            <div class="box">
+                <div class="box-header">슈's Friends Comments</div>
+                <div class="box-content">
+                    <table class="comments-table">
+                        <tr>
+                            <td style="width:55px;text-align:center;">
+                                <div class="comment-avatar"><img src="초희.webp" alt="초희"></div></div>
+                                <a class="comment-username" href="#">초희</a>
+                            </td>
+                            <td>
+                                <span class="comment-date">2002-06-01</span>
+                                <p class="comment-text">저 망할 놈의 노란 대가리가!</p>
+                                <p class="comment-reply">→ 우거지 맨션에 거주중인 폭주족 건달. 근육질 체격에 똥 모양 머리스타일을 하고 있다.</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width:55px;text-align:center;">
+                                <div class="comment-avatar"><img src="빈.webp" alt="빈"></div></div>
+                                <a class="comment-username" href="#">빈</a>
+                            </td>
+                            <td>
+                                <span class="comment-date">2001-06-17</span>
+                                <p class="comment-text">절대! 패배는! 없다! 너~ 한 번만 더 느끼~하고 더티하게 굴면 죽어~~!!</p>
+                                <p class="comment-reply">→ 남자친구이며 서로 사귀는 사이.</p>
+                            </td>
+                        </tr>
+                         <tr>
+                            <td style="width:55px;text-align:center;">
+                                <div class="comment-avatar"><img src="리아.webp" alt="리아"></div>
+                                <a class="comment-username" href="#">리아</a>
+                            </td>
+                            <td>
+                                <span class="comment-date">2003-06-10</span>
+                                <p class="comment-text">어머 언니두 참 이건 너무하시네...</p>
+                                <p class="comment-reply">→ 라이벌이자 숙적이며 서로 다투는 사이인 데다가 연적.</p>
+                            </td>
+                        </tr>
+                       
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- 오른쪽 -->
+        <div class="far-col">
+        <div class="box">
+            <div class="box-header">📺 슈 영상 보기</div>
+            <div class="box-content">
+                <div class="yt-wrap">
+                    <iframe
+                        src="https://www.youtube.com/embed/XiGvXKcL4-s"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+        </div>
+
+            <div class="box">
+                <div class="box-header">슈's Friend Space</div>
+                <div class="box-content">
+                    <p style="font-size:10px;margin-bottom:6px;"></p>
+                    <div class="friends-grid">
+                        <div class="friend-item"><div class="friend-avatar"><img src="빈.webp" alt="빈"></div><a href="#">빈</a></div>
+                        <div class="friend-item"><div class="friend-avatar"><img src="리아.webp" alt="리아"></div><a href="#">리아</a></div>
+                        <div class="friend-item"><div class="friend-avatar"><img src="초희.webp" alt="초희"></div><a href="#">초희</a></div>
+                        <div class="friend-item"><div class="friend-avatar"><img src="석.png" alt="석"></div><a href="#">석</a></div>
+                        <div class="friend-item"><div class="friend-avatar"><img src="준.png" alt="준"></div><a href="#">준</a></div>
+                        <div class="friend-item"><div class="friend-avatar"><img src="욱.png" alt="욱"></div><a href="#">욱</a></div>
+                        <div class="friend-item"><div class="friend-avatar"><img src="한별.png" alt="한별"></div><a href="#">한별</a></div>
+                        <div class="friend-item"><div class="friend-avatar"><img src="김찬.png" alt="김찬"></div><a href="#">김찬</a></div>
+                        <div class="friend-item"><div class="friend-avatar"></div><a href="#">모하메드 왕자</a></div>
+                        <div class="friend-item"><div class="friend-avatar"></div><a href="#">유스프</a></div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="footer">
+    ©2026 2000s characters
+</div>
+
+</body>
+</html>

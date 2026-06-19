@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,400;1,500;1,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/galmuri@latest/dist/galmuri.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>감자도리's Profile | object-based</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Galmuri9', sans-serif;
+            background-color: #efefef;
+            font-size: 12px;
+            color: #333;
+        }
+
+        a { color: #6699cc; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        .topbar {
+            background: linear-gradient(to bottom, #ddeeff, #10c6b3);
+            border-bottom: 2px solid #6699cc;
+            padding: 8px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        .topbar .logo {
+            font-size: 20px; font-weight: bold; color: #336699;
+            font-family: "Cormorant Garamond", serif;
+            padding: 2px 15px;
+            font-style: italic;
+            font-size: 35px;
+            font-weight: 600;
+            text-decoration: none;
+            line-height: 1.2;
+            letter-spacing: -1px;
+        }
+        .topbar .back-btn {
+            font-size: 11px; background: #6699cc; color: white; border: none;
+            padding: 4px 12px; cursor: pointer; text-decoration: none;
+            display: inline-block; border-radius: 4px;
+        }
+        .topbar .back-btn:hover { background: #4477aa; text-decoration: none; }
+
+        .container {
+            max-width: 1100px;
+            width: 100%;
+            margin: 14px auto;
+            background: white;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 16px;
+            display: flex;
+            gap: 14px;
+        }
+
+        .left-col { width: 220px; flex-shrink: 0; }
+        .right-col { flex: 1; min-width: 0; }
+
+        .profile-name { font-size: 25px; font-weight: bold; color: #336699; margin-bottom: 8px; font-family: Georgia, serif; }
+
+        .profile-pic {
+            border: 2px solid #6699cc; border-radius: 3px;
+            background: #f0f8ff; display: flex;
+            justify-content: center; align-items: center;
+            height: 220px; margin-bottom: 8px;
+            animation: sway 8s ease-in-out infinite;
+            transform-origin: top center;
+            overflow: hidden;
+        }
+        .profile-pic img { width: 100%; height: 100%; object-fit: contain; }
+
+        @keyframes sway {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-3px); }
+        }
+
+        .status-quote {
+            font-style: italic; font-size: 11px; color: #555;
+            background: #f0f8ff; border-left: 3px solid #6699cc;
+            border-radius: 0 2px 2px 0; padding: 6px 9px; margin-bottom: 8px;
+        }
+
+        .online-dot { width: 8px; height: 8px; background: #44cc44; border-radius: 50%; display: inline-block; margin-right: 4px; }
+        .meta-line { font-size: 10px; color: #555; margin-bottom: 3px; }
+        .meta-line:last-of-type {
+            margin-bottom: 25px;
+            }
+
+        .box {
+            border: 1px solid #10c6b3; margin-bottom: 12px; border-radius: 3px; overflow: hidden;
+            animation: sway 6s ease-in-out infinite;
+            transform-origin: top center;
+        }
+        .box:nth-child(2n) { animation-duration: 7s; animation-delay: -1.5s; }
+        .box:nth-child(3n) { animation-duration: 5.5s; animation-delay: -3s; }
+        .box:nth-child(4n) { animation-duration: 6.5s; animation-delay: -2s; }
+        .box:nth-child(5n) { animation-duration: 7.5s; animation-delay: -4s; }
+
+        .box-header { background: #10c6b3; color: white; padding: 6px 9px; font-weight: bold; font-size: 11px; }
+        .box-header a { color: #e0fff9; font-weight: normal; font-size: 10px; }
+        .box-content { padding: 8px; background: white; }
+
+        .profile-table { width: 100%; border-collapse: collapse; font-size: 10px; }
+        .profile-table td { padding: 4px 6px; border: 1px solid #ddd; vertical-align: top; }
+        .profile-table td.label { background: #d1f9ec; font-weight: bold; width: 75px; color: #224466; }
+
+        .blurb-title { color: #ff6600; font-weight: bold; margin: 8px 0 4px; font-size: 12px; }
+        .blurb-text { font-size: 11px; line-height: 1.6; }
+
+        .blog-list { list-style: none; }
+        .blog-list li { border-bottom: 1px dotted #ccc; padding: 5px 0; font-size: 10px; }
+
+        .moreinformation { list-style: none; }
+        .moreinformation li { border-bottom: 1px dotted #ccc; padding: 4px 8px; font-size: 10px; line-height: 1.6; }
+
+        .yt-wrap { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 4px; }
+        .yt-wrap iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+
+        .friends-grid { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 6px; }
+        .friend-item { text-align: center; width: 58px; }
+        .friend-avatar {
+            width: 50px; height: 50px; background: #d1f9ec;
+            border: 1px solid #4477aa; border-radius: 4px;
+            margin: 0 auto 3px; display: flex;
+            align-items: center; justify-content: center; font-size: 22px;
+            overflow: hidden;
+        }
+        .friend-avatar img { width: 100%; height: 100%; object-fit: cover; }
+        .friend-item a { font-size: 9px; }
+
+        .comments-table { width: 100%; border-collapse: collapse; font-size: 10px; }
+        .comments-table td { padding: 6px; border: 1px solid #ddd; vertical-align: top; }
+        .comment-avatar {
+            width: 50px; height: 50px; background: #d1f9ec;
+            border: 1px solid #4477aa; border-radius: 4px;
+            margin: 0 auto 3px; display: flex;
+            align-items: center; justify-content: center; font-size: 22px;
+            overflow: hidden;
+        }
+        .comment-avatar img { width: 100%; height: 100%; object-fit: cover; }
+        .comment-username { font-weight: bold; color: #336699; font-size: 10px; display: block; text-align: center; }
+        .comment-date { font-size: 9px; color: #888; display: block; margin-bottom: 3px; }
+        .comment-text { line-height: 1.5; }
+        .comment-reply { font-size: 9px; color: #6699cc; font-style: italic; margin-top: 4px; }
+
+        .footer {
+            text-align: center; font-size: 10px; color: #888;
+            margin: 6px 0 14px; padding-top: 6px; border-top: 1px solid #ccc;
+        }
+
+        @media (max-width: 700px) {
+            .container { flex-direction: column; margin: 8px; padding: 12px; }
+            .left-col { width: 100%; }
+            .profile-pic { height: 180px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="topbar">
+    <div class="logo">2000s characters</div>
+    <a href="index.html#open=panel" class="back-btn">← 돌아가기</a>
+</div>
+
+<div class="container">
+
+    <!-- 왼쪽: 프로필 -->
+    <div class="left-col">
+        <div class="profile-name">감자도리</div>
+
+        <div class="profile-pic">
+            <img src="감자도리.png" alt="감자도리">
+        </div>
+
+        <div class="status-quote">언젠가는 고구마가 될 수 있을까?</div>
+        <div class="meta-line"><span class="online-dot"></span>Last active: 빨간 후드 망토 정비 중</div>
+
+        <div class="box">
+            <div class="box-header">최근 게시물</div>
+            <div class="box-content">
+                <ul class="blog-list">
+                    <li>일등 고구마가 되고 싶어요</li>
+                    <li>전 엄마 아빠가 미워요</li>
+                    <li>난 입양된 감자야</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="box">
+            <div class="box-header">More Information...</div>
+            <div class="box-content">
+                <ul class="moreinformation">
+                    <li>디자인설(Design Seol)이 2002년에 선보인 감자도리는 고구마 마을에 입양된 유일한 감자라는 독특한 설정을 가진 캐릭터다. "감자도 고구마가 될 수 있다"는 희망적 메시지를 담고 있으며, 귀여운 외형과 달리 정체성에 대한 깊은 고민을 다루는 진지한 서사가 특징이다.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- 오른쪽 -->
+    <div class="right-col">
+
+        <div class="box">
+            <div class="box-header">프로필</div>
+            <div class="box-content">
+                <table class="profile-table">
+                    <tr><td class="label">이름</td><td>감자도리 Gamjadori</td></tr>
+                    <tr><td class="label">유형</td><td>비인간형 (감자)</td></tr>
+                    <tr><td class="label">연재</td><td>야후! 코리아 플래시 애니메이션</td></tr>
+                    <tr><td class="label">성별</td><td>남</td></tr>
+                    <tr><td class="label">성격</td><td>엉뚱하고 디지게 착함</td></tr>
+                    <tr><td class="label">소원</td><td>일등 고구마가 되고 싶어서 안달나쓰~ (정말 언젠가는 고구마가 될 수 있을까?^^;;;)</td></tr>
+                    <tr><td class="label">희망</td><td>딱딱하고 맛있는 밤고구마가 되는 것</td></tr>
+                    <tr><td class="label">취미</td><td>겨울연가 시청, 축구 응원용 빨간 팬티 뜨개질하기</td></tr>
+                    <tr><td class="label">특성</td><td>고구마 마을의 유일한 감자, 숏다리가 콤플렉스, 항상 빨간 후드 망토를 쓰고 다님</td></tr>
+                    <tr><td class="label">⚠ 주의</td><td>몸에 싹이 나면 솔라닌 독성 발생</td></tr>
+                    <tr><td class="label">히트곡</td><td>회사가기시러쏭</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="box">
+            <div class="box-header">가족 관계</div>
+            <div class="box-content">
+                <table class="profile-table">
+                    <tr><td class="label">아빠</td><td>밤고구마</td></tr>
+                    <tr><td class="label">엄마</td><td>물고구마</td></tr>
+                    <tr><td class="label">여동생</td><td>감자코코 (쌍둥이)</td></tr>
+                    <tr><td class="label">기타</td><td>입양아라는 사실을 알고 감동적인 눈물을 흘린 적 있음</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="box">
+            <div class="box-header">내 정보</div>
+            <div class="box-content">
+                <div class="blurb-title">About me:</div>
+                <p class="blurb-text">속이 꽉 찬 알 고구마, 물컹물컹 물고구마, 토실토실 밤고구마들이 모여 사는 어느 고구마 마을에 순순하고 엉뚱한 감자도리가 살고 있어요. 아주 어릴 때 엄마 아빠가 감자도리와 동생 감자코코를 입양하였죠. 어릴 때는 고구마 친구들과 별 차이가 없던 감자도리는 성장해가면서 자신이 친구들과 다름을 느끼게 되고 자신의 정체성에 대해 고민하게 되죠. 그때부터 고구마 색깔에 가까워지기 위해 빨간 옷만 입고 일등 고구마가 되기 위해 엉뚱한 일을 벌이게 됩니다.</p>
+                <div class="blurb-title">디자인 의도</div>
+                <p class="blurb-text">"감자도 고구마가 될 수 있다"는 희망적 메시지. 소외된 존재에 대한 따뜻한 시선. 빨간 후드 망토는 고구마처럼 보이고 싶은 감자도리의 간절한 소망을 담고 있다. 둥글둥글한 노란 몸체와 빨간 후드 망토의 강렬한 대비가 그림체의 특징.</p>
+        </div>
+
+        <div class="box">
+            <div class="box-header">방명록</div>
+            <div class="box-content">
+                <table class="comments-table">
+                    <tr>
+                        <td style="width:55px;text-align:center;">
+                            <div class="comment-avatar"></div>
+                            <a class="comment-username" href="#">감자코코</a>
+                        </td>
+                        <td>
+                            <span class="comment-date">2002-04-12</span>
+                            <p class="comment-text">오빠 또 빨간 옷 입었네ㅋㅋ 그래도 오빠는 오빠 그대로가 제일 멋있어!</p>
+                            <p class="comment-reply">→ 감자도리: 코코야 고마워... 흑 나도 언젠간 고구마가 될 수 있겠지?</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width:55px;text-align:center;">
+                            <div class="comment-avatar"></div>
+                            <a class="comment-username" href="#">밤고구마아빠</a>
+                        </td>
+                        <td>
+                            <span class="comment-date">2002-05-30</span>
+                            <p class="comment-text">아들아, 너는 감자든 고구마든 우리 가족이야. 그 사실은 변하지 않는다.</p>
+                            <p class="comment-reply">→ 감자도리: 아빠... 흑흑 감동적인 눈물이 나요</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width:55px;text-align:center;">
+                            <div class="comment-avatar"></div>
+                            <a class="comment-username" href="#">고구마마을주민</a>
+                        </td>
+                        <td>
+                            <span class="comment-date">2002-07-19</span>
+                            <p class="comment-text">감자도리 숏다리 너무 귀엽다구욧!! 콤플렉스라니 말도 안돼</p>
+                            <p class="comment-reply">→ 감자도리: 흑흑 진짜요? 그럼 오늘부터 자신감 뿜뿜 해야지</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width:55px;text-align:center;">
+                            <div class="comment-avatar"></div>
+                            <a class="comment-username" href="#">야후코리아팬</a>
+                        </td>
+                        <td>
+                            <span class="comment-date">2002-09-02</span>
+                            <p class="comment-text">회사가기시러쏭 듣고 출근길이 견딜만해졌어요 ㅠㅠ 감사합니다</p>
+                            <p class="comment-reply">→ 감자도리: 다들 힘내요! 일등 고구마는 못 돼도 일등 응원은 할 수 있으니까!</p>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="box">
+            <div class="box-header">감자도리's Friend Space</div>
+            <div class="box-content">
+                <div class="friends-grid">
+                    <div class="friend-item"><div class="friend-avatar"><img src="감자코코.png" alt="감자코코"></div><a href="#">감자코코</a></div>
+                    <div class="friend-item"><div class="friend-avatar"><img src="엄마.png" alt="엄마"></div><a href="#">엄마</a></div>
+                    <div class="friend-item"><div class="friend-avatar"><img src="아빠.png" alt="아빠"></div><a href="#">아빠</a></div>
+                    <div class="friend-item"><div class="friend-avatar"><img src="오바겅쥬.png" alt="오바겅쥬"></div><a href="#">오바겅쥬</a></div>
+                    <div class="friend-item"><div class="friend-avatar"><img src="물고구마.png" alt="물고구마"></div><a href="#">물고구마</a></div>
+                    <div class="friend-item"><div class="friend-avatar"><img src="욕쟁이 할머니.png" alt="욕쟁이 할머니"></div><a href="#">욕쟁이 할머니</a></div>
+                    <div class="friend-item"><div class="friend-avatar"><img src="감자 아줌마.png" alt="감자아줌마"></div><a href="#">감자 아줌마</a></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="footer">
+    ©2026 2000s characters
+</div>
+
+</body>
+</html>

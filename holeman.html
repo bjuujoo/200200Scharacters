@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,400;1,500;1,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/galmuri@latest/dist/galmuri.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>홀맨's Profile | object-based</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Galmuri9', sans-serif;
+            background-color: #efefef;
+            font-size: 12px;
+            color: #333;
+        }
+
+        a { color: #6699cc; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        .topbar {
+            background: linear-gradient(to bottom, #ddeeff, #10c6b3);
+            border-bottom: 2px solid #6699cc;
+            padding: 8px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        .topbar .logo { font-size: 20px; font-weight: bold; color: #336699; font-family: "Galmuri9", serif;
+            top: 1.5rem; left: 2rem;
+            z-index: 100;
+            padding: 4px 15px;
+            font-size: 25px;
+            font-weight: 600;
+            text-decoration: none;
+            line-height: 1.2;
+            letter-spacing: -1px; }
+        }
+        .topbar .back-btn {
+            font-size: 11px; background: #6699cc; color: white; border: none;
+            padding: 4px 12px; cursor: pointer; text-decoration: none;
+            display: inline-block; border-radius: 4px;
+        }
+        .topbar .back-btn:hover { background: #4477aa; text-decoration: none; }
+
+        .container {
+            max-width: 1100px;
+            width: 100%;
+            margin: 14px auto;
+            background: white;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 16px;
+            display: flex;
+            gap: 14px;
+        }
+
+        .left-col { width: 220px; flex-shrink: 0; }
+        .right-col { flex: 1; min-width: 0; }
+
+        .profile-name { font-size: 25px; font-weight: bold; color: #336699; margin-bottom: 8px; font-family: Georgia, serif; }
+
+        .profile-pic {
+            border: 2px solid #6699cc; border-radius: 3px;
+            background: #f0f8ff; display: flex;
+            justify-content: center; align-items: center;
+            height: 220px; margin-bottom: 8px;
+            animation: sway 8s ease-in-out infinite;
+            transform-origin: top center;
+            overflow: hidden;
+        }
+        .profile-pic img { width: 100%; height: 100%; object-fit: contain; }
+
+        @keyframes sway {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-3px); }
+        }
+
+        .status-quote {
+            font-style: italic; font-size: 11px; color: #555;
+            background: #f0f8ff; border-left: 3px solid #6699cc;
+            border-radius: 0 2px 2px 0; padding: 6px 9px; margin-bottom: 8px;
+        }
+
+        .online-dot { width: 8px; height: 8px; background: #44cc44; border-radius: 50%; display: inline-block; margin-right: 4px; }
+        .meta-line { font-size: 10px; color: #555; margin-bottom: 3px; }
+
+        .box {
+            border: 1px solid #10c6b3; margin-bottom: 12px; border-radius: 3px; overflow: hidden;
+            animation: sway 6s ease-in-out infinite;
+            transform-origin: top center;
+        }
+        .box:nth-child(2n) { animation-duration: 7s; animation-delay: -1.5s; }
+        .box:nth-child(3n) { animation-duration: 5.5s; animation-delay: -3s; }
+        .box:nth-child(4n) { animation-duration: 6.5s; animation-delay: -2s; }
+        .box:nth-child(5n) { animation-duration: 7.5s; animation-delay: -4s; }
+
+        .box-header { background: #10c6b3; color: white; padding: 6px 9px; font-weight: bold; font-size: 11px; }
+        .box-header a { color: #e0fff9; font-weight: normal; font-size: 10px; }
+        .box-content { padding: 8px; background: white; }
+
+        .profile-table { width: 100%; border-collapse: collapse; font-size: 10px; }
+        .profile-table td { padding: 4px 6px; border: 1px solid #ddd; vertical-align: top; }
+        .profile-table td.label { background: #d1f9ec; font-weight: bold; width: 75px; color: #224466; }
+
+        .blurb-title { color: #ff6600; font-weight: bold; margin: 8px 0 4px; font-size: 12px; }
+        .blurb-text { font-size: 11px; line-height: 1.6; }
+
+        .blog-list { list-style: none; }
+        .blog-list li { border-bottom: 1px dotted #ccc; padding: 5px 0; font-size: 10px; }
+
+        .moreinformation { list-style: none; }
+        .moreinformation li { border-bottom: 1px dotted #ccc; padding: 4px 8px; font-size: 10px; line-height: 1.6; }
+
+        .yt-wrap { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 4px; }
+        .yt-wrap iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+
+        .friends-grid { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 6px; }
+        .friend-item { text-align: center; width: 58px; }
+        .friend-avatar {
+            width: 50px; height: 50px; background: #d1f9ec;
+            border: 1px solid #4477aa; border-radius: 4px;
+            margin: 0 auto 3px; display: flex;
+            align-items: center; justify-content: center; font-size: 22px;
+            overflow: hidden;
+        }
+        .friend-avatar img { width: 100%; height: 100%; object-fit: cover; }
+        .friend-item a { font-size: 9px; }
+
+        .comments-table { width: 100%; border-collapse: collapse; font-size: 10px; }
+        .comments-table td { padding: 6px; border: 1px solid #ddd; vertical-align: top; }
+        .comment-avatar {
+            width: 50px; height: 50px; background: #d1f9ec;
+            border: 1px solid #4477aa; border-radius: 4px;
+            margin: 0 auto 3px; display: flex;
+            align-items: center; justify-content: center; font-size: 22px;
+            overflow: hidden;
+        }
+        .comment-avatar img { width: 100%; height: 100%; object-fit: cover; }
+        .comment-username { font-weight: bold; color: #336699; font-size: 10px; display: block; text-align: center; }
+        .comment-date { font-size: 9px; color: #888; display: block; margin-bottom: 3px; }
+        .comment-text { line-height: 1.5; }
+        .comment-reply { font-size: 9px; color: #6699cc; font-style: italic; margin-top: 4px; }
+
+        .footer {
+            text-align: center; font-size: 10px; color: #888;
+            margin: 6px 0 14px; padding-top: 6px; border-top: 1px solid #ccc;
+        }
+
+        @media (max-width: 700px) {
+            .container { flex-direction: column; margin: 8px; padding: 12px; }
+            .left-col { width: 100%; }
+            .profile-pic { height: 180px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="topbar">
+    <div class="logo">2000s characters</div>
+    <a href="index.html#open=panel" class="back-btn">← 돌아가기</a>
+</div>
+
+<div class="container">
+
+    <!-- 왼쪽: 프로필 -->
+    <div class="left-col">
+        <div class="profile-name">홀맨</div>
+
+        <div class="profile-pic">
+            <img src="홀맨.jpeg" alt="홀맨">
+        </div>
+
+        <div class="status-quote">"모든 것의 처음과 끝은 원에서 시작된다. 고로 세계는 하나."</div>
+        <div class="meta-line"><span class="online-dot"></span>Last active: 홀독이랑 산책 중</div>
+        <div class="meta-line"><b>Mood:</b> 친구 사귀고 싶음 🕳️</div>
+
+        <div class="box">
+            <div class="box-header">최근 게시물</div>
+            <div class="box-content">
+                <ul class="blog-list">
+                    <li></li>
+                    <li></li>
+                    
+                </ul>
+            </div>
+        </div>
+
+        <div class="box">
+            <div class="box-header">More Information...</div>
+            <div class="box-content">
+                <ul class="moreinformation">
+                    <li>LG텔레콤이 2001년 10대 청소년 대상 이동통신 요금제 서비스 '카이(Khai)'의 마스코트로 만든 홀맨은 눈, 코, 입이 없는 얼굴의 홀(Hole)을 통해 무한한 가능성을 상징하는 캐릭터다. 단순한 원형 몸통과 표정 없는 얼굴이라는 독특한 디자인으로 당시 10대들의 호기심을 자극했으며, 18년 만에 '생계형 인플루언서'로 복귀해 다시 화제가 되었다.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- 오른쪽 -->
+    <div class="right-col">
+
+        <div class="box">
+            <div class="box-header">프로필</div>
+            <div class="box-content">
+                <table class="profile-table">
+                    <tr><td class="label">이름</td><td>홀맨 Holeman</td></tr>
+                    <tr><td class="label">유형</td><td>비인간형 (외계인)</td></tr>
+                    <tr><td class="label">제작사</td><td>LG텔레콤</td></tr>
+                    <tr><td class="label">연도</td><td>2001년</td></tr>
+                    <tr><td class="label">나이</td><td>아무도 모름</td></tr>
+                    <tr><td class="label">사는 곳</td><td>KH2002 혹성, 화이트홀, 지구</td></tr>
+                    <tr><td class="label">취미</td><td>처음 보는 물건 건드려 보기, 만두 한 접시 통째로 먹기, 홀독과 산책하기</td></tr>
+                    <tr><td class="label">특기</td><td>머리 돌리기, 춤, 무엇이든 빨아들이고 내뱉기</td></tr>
+                    <tr><td class="label">희망사항</td><td>이 세상, 이 우주의 모든 생명체들이랑 친구되기</td></tr>
+                    <tr><td class="label">좋아하는 것</td><td>홀독(holedog), 별, 친구, 댄스, 만두, 자신과 비슷하게 생긴 것</td></tr>
+                    <tr><td class="label">싫어하는 것</td><td>별로 없는 것 같으나, 친구를 괴롭히는 행위는 무척 싫어한다.</td></tr>
+                    <tr><td class="label">좌우명</td><td>모든 것의 처음과 끝은 원에서 시작된다. 고로 세계는 하나.</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="box">
+            <div class="box-header">친구 & 반려동물</div>
+            <div class="box-content">
+                <table class="profile-table">
+                    <tr><td class="label">친구</td><td>블랙홀</td></tr>
+                    <tr><td class="label">반려동물</td><td>홀독, 홀캣</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="box">
+            <div class="box-header">내 정보</div>
+            <div class="box-content">
+                <div class="blurb-title">About me:</div>
+                <p class="blurb-text">느릿느릿하고 차분하지만 보는 사람들의 관점에 따라서는 약간 어처구니 없는 성격이다. 그러나 정의감 하나는 남다르다. 친구 사귀는 것을 특히 좋아해 자신과는 상극인 블랙홀까지 친구로 삼기에 이른다.</p>
+                <div class="blurb-title">디자인 의도</div>
+                <p class="blurb-text">눈, 코, 입이 없는 얼굴의 홀(Hole)은 무한한 가능성을 상징한다. 홀을 통해 10대에게 무한한 가능성의 메시지를 던지고, 10대의 생각과 감성을 대변하여 독특한 브랜드로 포지셔닝하는 전략을 펼쳤다. 단순한 원형 몸통에 팔다리가 달려있고 몸에 구멍이 뚫려있는 독특한 형태이며, 표정 변화가 거의 없는 것이 특징이다.</p>
+                <div class="blurb-title">비화</div>
+                <p class="blurb-text">18년 만에 '생계형 인플루언서'로 복귀하며 현대적인 세계관을 구축, 다시 한번 대중의 관심을 받았다.</p>
+            </div>
+        </div>
+
+        <div class="box">
+            <div class="box-header">방명록</div>
+            <div class="box-content">
+                <table class="comments-table">
+                    <tr>
+                        <td style="width:55px;text-align:center;">
+                            <div class="comment-avatar"></div>
+                            <a class="comment-username" href="#">블랙홀</a>
+                        </td>
+                        <td>
+                            <span class="comment-date">2001-11-03</span>
+                            <p class="comment-text">홀맨아, 나랑 정반대인데도 친구해줘서 고마워. 너 진짜 신기한 녀석이야.</p>
+                            <p class="comment-reply">→ 홀맨: 우리 둘 다 구멍이잖아! 그게 통하는 거 아닐까? ㅎㅎ</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width:55px;text-align:center;">
+                            <div class="comment-avatar"></div>
+                            <a class="comment-username" href="#">홀독</a>
+                        </td>
+                        <td>
+                            <span class="comment-date">2002-02-14</span>
+                            <p class="comment-text">멍멍! 주인님이랑 매일 산책하는 게 제일 행복해요</p>
+                            <p class="comment-reply">→ 홀맨: 나도 너랑 산책할 때가 제일 좋아 홀독아!</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width:55px;text-align:center;">
+                            <div class="comment-avatar"></div>
+                            <a class="comment-username" href="#">10대팬</a>
+                        </td>
+                        <td>
+                            <span class="comment-date">2002-08-11</span>
+                            <p class="comment-text">홀맨 다시 돌아왔다는 소식 듣고 너무 반가웠어요! 18년 만이라니ㅠㅠ</p>
+                            <p class="comment-reply">→ 홀맨: 다들 기다려줘서 고마워! 다시 모든 생명체들이랑 친구가 되러 왔어 🕳️</p>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="box">
+            <div class="box-header">홀맨's Friend Space</div>
+            <div class="box-content">
+                <div class="friends-grid">
+                    <div class="friend-item"><div class="friend-avatar"></div><a href="#">블랙홀</a></div>
+                    <div class="friend-item"><div class="friend-avatar"></div><a href="#">홀독</a></div>
+                    <div class="friend-item"><div class="friend-avatar"></div><a href="#">홀캣</a></div>
+                    <div class="friend-item"><div class="friend-avatar"></div><a href="#">졸라맨</a></div>
+                    <div class="friend-item"><div class="friend-avatar"></div><a href="#">블루베어</a></div>
+                    <div class="friend-item"><div class="friend-avatar"></div><a href="#">감자도리</a></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="footer">
+    ©2026 2000s characters
+</div>
+
+</body>
+</html>

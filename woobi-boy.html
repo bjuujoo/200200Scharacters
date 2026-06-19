@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,400;1,500;1,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/galmuri@latest/dist/galmuri.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>우비소년's Profile | human-based</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Galmuri9', sans-serif;
+            background-color: #efefef;
+            font-size: 12px;
+            color: #333;
+        }
+
+        a { color: #6699cc; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        body {
+            background-image: url("배경.jpg");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed; 
+
+        .topbar {
+            background: linear-gradient(to bottom, #ddeeff, #10c6b3);
+            border-bottom: 2px solid #6699cc;
+            padding: 8px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        .topbar .logo { font-size: 20px; font-weight: bold; color: #336699; font-family: "Galmuri9", serif;
+            top: 1.5rem; left: 2rem;
+            z-index: 100;
+            padding: 4px 15px;
+            font-size: 25px;
+            font-weight: 600;
+            text-decoration: none;
+            line-height: 1.2;
+            letter-spacing: -1px; }
+        .topbar .back-btn {
+            font-size: 11px; background: #6699cc; color: white; border: none;
+            padding: 4px 12px; cursor: pointer; text-decoration: none;
+            display: inline-block; border-radius: 4px;
+        }
+        .topbar .back-btn:hover { background: #4477aa; text-decoration: none; }
+
+        /* 전체 3단 레이아웃 */
+        .container {
+            max-width: 1100px;
+            width: 100%;
+            margin: 14px auto;
+            background: white;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 16px;
+            display: flex;
+            gap: 14px;
+        }
+
+        /* 왼쪽 프로필 */
+        .left-col { width: 220px; flex-shrink: 0; }
+
+        /* 오른쪽 2단 */
+        .right-wrap { flex: 1; min-width: 0; display: flex; gap: 14px; }
+        .mid-col { flex: 1; min-width: 0; }
+        .far-col { width: 220px; flex-shrink: 0; }
+
+
+        /* Profile */
+        .profile-name { font-size: 25px; font-weight: bold; color: #336699; margin-bottom: 8px; font-family: Georgia, serif; }
+
+        .profile-pic {
+            border: 2px solid #6699cc; border-radius: 3px;
+            background: #f0f8ff; display: flex;
+            justify-content: center; align-items: center;
+            aspect-ratio: 1 / 1;
+            width: 100%;
+            margin-bottom: 8px;
+            animation: sway 8s ease-in-out infinite;
+            transform-origin: top center;
+            overflow: hidden;
+        }
+        .profile-pic img {
+            width: 100%; height: 100%; object-fit: cover;
+        }
+
+        .stick-figure { animation: float 3s ease-in-out infinite; }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .status-quote {
+            font-style: italic; font-size: 11px; color: #555;
+            background: #f0f8ff; border-left: 3px solid #6699cc;
+            border-radius: 0 2px 2px 0; padding: 6px 9px; margin-bottom: 8px;
+        }
+
+        .online-dot { width: 8px; height: 8px; background: #44cc44; border-radius: 50%; display: inline-block; margin-right: 4px; }
+        .meta-line { font-size: 10px; color: #555; margin-bottom: 3px; }
+
+        /* Boxes */
+        .box { border: 1px solid #10c6b3; margin-bottom: 12px; border-radius: 3px; overflow: hidden;
+             animation: sway 6s ease-in-out infinite;
+             transform-origin: top center;
+             }
+        .box:nth-child(2n) { animation-duration: 7s; animation-delay: -1.5s; }
+        .box:nth-child(3n) { animation-duration: 5.5s; animation-delay: -3s; }
+        .box:nth-child(4n) { animation-duration: 6.5s; animation-delay: -2s; }
+        .box:nth-child(5n) { animation-duration: 7.5s; animation-delay: -4s; }
+
+        @keyframes sway {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-3px); }
+        }
+        .box-header { background: #10c6b3; color: white; padding: 6px 9px; font-weight: bold; font-size: 11px; }
+        .box-header a { color: #e0fff9; font-weight: normal; font-size: 10px; }
+        .box-content { padding: 8px; background: white; }
+
+        .contact-links { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
+        .contact-links a { font-size: 10px; color: #336699; display: flex; align-items: center; gap: 4px; padding: 2px 0; }
+
+        .url-box { font-size: 9px; border: 1px solid #ccc; border-radius: 3px; padding: 4px; background: #f9f9f9; word-break: break-all; color: #555; }
+
+        /* Profile table */
+        .woobiboyprofile { width: 100%; border-collapse: collapse; font-size: 10px; }
+        .woobiboyprofile td { padding: 4px 6px; border: 1px solid #ddd; vertical-align: top; }
+        .woobiboyprofile td.label { background: #d1f9ec; font-weight: bold; width: 75px; color: #224466; }
+
+        /* Blurbs */
+        .blurb-title { color: #ff6600; font-weight: bold; margin: 8px 0 4px; font-size: 12px; }
+        .blurb-text { font-size: 11px; line-height: 1.6; }
+
+        /* Blog */
+        .blog-list { list-style: none; }
+        .blog-list li { border-bottom: 1px dotted #ccc; padding: 5px 0; font-size: 10px; }
+
+        .moreinformation { list-style: none; }
+        .moreinformation li { border-bottom: 1px dotted #ccc; padding: 4px 8px; font-size: 10px; }
+
+
+        /* YouTube */
+        .yt-wrap { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 4px; }
+        .yt-wrap iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+
+        /* Friends */
+        .friends-grid { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 6px; }
+        .friend-item { text-align: center; width: 58px; }
+        .friend-avatar {
+            width: 50px; height: 50px; background: #d1f9ec;
+            border: 1px solid #4477aa; border-radius: 4px;
+            margin: 0 auto 3px; display: flex;
+            align-items: center; justify-content: center; font-size: 22px;
+            overflow: hidden;
+        }
+        .friend-avatar img {
+            width: 100%; height: 100%; object-fit: cover;
+        }
+        .friend-item a { font-size: 9px; }
+
+        /* Comments */
+        .comments-table { width: 100%; border-collapse: collapse; font-size: 10px; }
+        .comments-table td { padding: 6px; border: 1px solid #ddd; vertical-align: top; }
+        .comment-avatar {
+            width: 40px; height: 40px; background: #d1f9ec;
+            border: 1px solid #6699cc; border-radius: 4px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 18px; margin: 0 auto 3px;
+            overflow: hidden;
+        }
+        .comment-avatar img {
+            width: 100%; height: 100%; object-fit: cover;
+        }
+        .comment-username { font-weight: bold; color: #336699; font-size: 10px; display: block; text-align: center; }
+        .comment-date { font-size: 9px; color: #888; display: block; margin-bottom: 3px; }
+        .comment-text { line-height: 1.5; }
+        .comment-reply { font-size: 9px; color: #336699; font-style: italic; margin-top: 4px; }
+
+        /* Footer */
+        .footer { text-align: center; font-size: 10px; color: #888; margin: 6px 0 14px; padding-top: 6px; border-top: 1px solid #ccc; }
+        .footer a { color: #6699cc; margin: 0 4px; }
+
+        /* RESPONSIVE */
+        @media (max-width: 900px) {
+            .right-wrap { flex-direction: column; }
+            .far-col { width: 100%; }
+        }
+        @media (max-width: 600px) {
+            .container { flex-direction: column; margin: 8px; padding: 12px; }
+            .left-col { width: 100%; min-width: 0; }
+            .right-wrap { flex-direction: column; }
+            .far-col { width: 100%; order: 99; }
+            .contact-links { grid-template-columns: 1fr 1fr; }
+            .blurb-text { font-size: 10px; }
+        }
+        @media (max-width: 400px) {
+            .profile-name { font-size: 18px; }
+            .contact-links { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="topbar">
+    <div class="logo">2000년대 캐릭터</div>
+    <a href="index.html#open=panel" class="back-btn">← 돌아가기</a>
+</div>
+
+<div class="container">
+
+    <!-- 왼쪽: 프로필 -->
+    <div class="left-col">
+        <div class="profile-name">우비소년</div>
+
+        <div class="profile-pic">
+            <img src="우비소년1.png" alt="우비소년">
+        </div>
+
+        <div class="status-quote">어떻게 이럴 수가 있어요! 나 이거 정말 화가 나서...</div>
+        <div class="meta-line"><span class="online-dot"></span>Last active: 방금 전</div>
+        <div class="meta-line"><b>Mood:</b>남을 돕자</div>
+
+        <div class="box">
+            <div class="box-header">최근 게시물</div>
+            <div class="box-content">
+                <ul class="blog-list">
+                    <li>시시한 걱정일랑 마시고~</li>
+                    <li>봐라봐라~ 니 죽고 싶나?</li>
+                    <li>아~~ 심심하다 아~~ 너무 따분한 날이군 </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="box">
+            <div class="box-header">More Information...</div>
+            <div class="box-content">
+                <ul class="moreinformation">
+                    <li>우비소년은 조금은 특이한 외모와 멍청 하기까지 한 순진한 성격 때문에 함께 사는 우거지맨션 주민들의 화풀이 대상이 되곤 한다.<br>우비소년의 탄생은 e-card를 통해서였다. 화이트데이를 전후로 등장한 이 캐릭터는 발렌타인데이에 초콜릿 하나 못 받는 불쌍한 남자 를 대표하는 데 컨셉트를 맞춰 제작되었다. 이후 e-card를 통해 성장을 거듭해 플래시 애니메이션으로 다시 네티즌을 만나게 되었는데, 전문 애니메이터와 성우를 동원해 완성도를 높였다. 우비소년의 높은 인기는 함께 출발한 사이트 intz.com의 수익을 급성장시켜 작품 제작비를 회수하고도 남을 정도이다. 우비소년의 제작사인 로이비주얼은 별도의 홈페이지 www.woobiboy.com을 통해 에피소드를 연재하며 다양한 캐릭터 상품도 판매하고 있다.
+                    그리고 기존의 애니메이션을 활용하여 다른 매체에 진출하기 위한 준비도 병행하고 있다.
+    
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- 오른쪽 2단 -->
+    <div class="right-wrap">
+
+        <!-- 가운데 -->
+        <div class="mid-col">
+
+            <div class="box">
+                <div class="box-header">프로필</div>
+                <div class="box-content">
+                    <table class="zollamanprofile">
+                        <tr><td class="label">이름</td><td>우비소년 Woobi-boy</td></tr>
+                        <tr><td class="label">유형</td><td>인간형</td></tr>
+                        <tr><td class="label">나이</td><td>10대 초반에서 중반</td></tr>
+                        <tr><td class="label">인적사항</td><td>우거지맨션에 거주하며, 비가 오나 눈이 오나 노란 우비를 입고 있다</td></tr>
+                        <tr><td class="label">취미</td><td>봉사, 삐약이 길득이기</td></tr>
+                        <tr><td class="label">특기</td><td>햇빛에 나가 졸기</td></tr>
+                        <tr><td class="label">좋아하는 것</td><td>우비, 비밀병기 메가삐약이</td></tr>
+                        <tr><td class="label">싫어하는 것</td><td>떡(특히 시루떡)</td></tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="box">
+                <div class="box-header">내 소개</div>
+                <div class="box-content">
+                    <div class="blurb-title">About me:</div>
+                    <p class="blurb-text">순진하고 호기심. 많지만 착하지는 않다. 미래를 예측하지 못하며, 조금 아는 것이 결국 화를 부른다. 사고를 치고도 그 결과를 모르며, 자신의 잘못은 더욱 모른다. 심지어 왜 맞는 지도 모른다. 가학적 행동과 따돌림의 대상이며, 대변자 역할을 자처한다.</p>
+                </div>
+            </div>
+
+            <div class="box">
+                <div class="box-header">방명록</div>
+                <div class="box-content">
+                    <table class="comments-table">
+                        <tr>
+                            <td style="width:55px;text-align:center;">
+                                <div class="comment-avatar"><img src="엘비수1.png" alt="엘비수"></div></div>
+                                <a class="comment-username" href="#">엘비수</a>
+                            </td>
+                            <td>
+                                <span class="comment-date">2002-06-01</span>
+                                <p class="comment-text">저 망할 놈의 노란 대가리가!</p>
+                                <p class="comment-reply">→ 우거지 맨션에 거주중인 폭주족 건달. 근육질 체격에 똥 모양 머리스타일을 하고 있다.</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width:55px;text-align:center;">
+                                <div class="comment-avatar"><img src="슬로우빠떼루.png" alt="슬로우빠떼루"></div></div>
+                                <a class="comment-username" href="#">슬로우<br>빠떼루</a>
+                            </td>
+                            <td>
+                                <span class="comment-date">2001-06-17</span>
+                                <p class="comment-text">절대! 패배는! 없다! 너~ 한 번만 더 느끼~하고 더티하게 굴면 죽어~~!!</p>
+                                <p class="comment-reply">→ 근육질의 괴력녀이며 빠다킹을 싫어한다.</p>
+                            </td>
+                        </tr>
+                         <tr>
+                            <td style="width:55px;text-align:center;">
+                                <div class="comment-avatar"><img src="빠다킹.png" alt="빠다킹"></div>
+                                <a class="comment-username" href="#">빠다킹</a>
+                            </td>
+                            <td>
+                                <span class="comment-date">2003-06-10</span>
+                                <p class="comment-text">어머 언니두 참 이건 너무하시네...</p>
+                                <p class="comment-reply">→ 성 정체성이 모호, 느끼하고 과장된 말투</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width:55px;text-align:center;">
+                                <div class="comment-avatar"><img src="미자.png" alt="미자"></div></div>
+                                <a class="comment-username" href="#">미자</a>
+                            </td>
+                            <td>
+                                <span class="comment-date">2000-12-15</span>
+                                <p class="comment-text">어우~ 난 기다리는 건 딱 질색이야</p>
+                                <p class="comment-reply">→ 화장을 않고는 밖으로 나가지 못하는 공주병</p>
+                            </td>
+                        </tr>
+                       
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- 오른쪽 -->
+        <div class="far-col">
+        <div class="box">
+            <div class="box-header">📺 우비소년 영상 보기</div>
+            <div class="box-content">
+                <div class="yt-wrap">
+                    <iframe
+                        src="https://www.youtube.com/embed/XiGvXKcL4-s"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+        </div>
+
+            <div class="box">
+                <div class="box-header">우비소년's Friend Space</div>
+                <div class="box-content">
+                    <p style="font-size:10px;margin-bottom:6px;"></p>
+                    <div class="friends-grid">
+                        <div class="friend-item"><div class="friend-avatar"><img src="엘비수1.png" alt="엘비수"></div><a href="#">엘비수</a></div>
+                        <div class="friend-item"><div class="friend-avatar"><img src="미자.png" alt="미자"></div><a href="#">미자</a></div>
+                        <div class="friend-item"><div class="friend-avatar"><img src="오타군.png" alt="오타군"></div><a href="#">오타군</a></div>
+                        <div class="friend-item"><div class="friend-avatar"><img src="뱃살공주.png" alt="뱃살공주"></div><a href="#">뱃살공주</a></div>
+                        <div class="friend-item"><div class="friend-avatar"><img src="슬로우빠떼루.png" alt="슬로우빠떼루"></div><a href="#">슬로우 빠떼루</a></div>
+                        <div class="friend-item"><div class="friend-avatar"><img src="뻥도사.png" alt="뻥도사"></div><a href="#">뻥도사</a></div>
+                        <div class="friend-item"><div class="friend-avatar"><img src="빠다킹.png" alt="빠다킹"></div><a href="#">빠다킹</a></div>
+                        <div class="friend-item"><div class="friend-avatar"><img src="꽃님이.png" alt="꽃님이"></div><a href="#">꽃님이</a></div>
+                        <div class="friend-item"><div class="friend-avatar"><img src="뺙이.png" alt="뺙이"></div><a href="#">뺙이</a></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="footer">
+    ©2026 2000s characters
+</div>
+
+</body>
+</html>
